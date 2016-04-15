@@ -35,7 +35,7 @@ class Elemento extends \yii\db\ActiveRecord
         return [
             [['tempo', 'tipo_idtipo'], 'integer'],
             [['descricao'], 'string'],
-          //  [['tipo_idtipo'], 'required'],
+            [['descricao','nome','tempo','tipo_idtipo'], 'required'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -46,11 +46,11 @@ class Elemento extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idelemento' => 'Id elemento',
+            'idelemento' => 'Elemento',
             'nome' => 'Nome',
-            'tempo' => 'Tempo',
-            'descricao' => 'Descricao',
-            'tipo_idtipo' => 'Tipo Idtipo',
+            'tempo' => 'Tempo em segundos',
+            'descricao' => 'Descrição',
+            'tipo_idtipo' => 'Tipo',
         ];
     }
 
