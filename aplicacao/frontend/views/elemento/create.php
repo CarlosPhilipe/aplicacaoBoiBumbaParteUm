@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model frontend\models\Classes */
 
 $this->title = 'Cadastrar Elemento';
-$this->params['breadcrumbs'][] = ['label' => 'Classes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Elemento', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-create">
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'tipo' => $tipo,
     ]) ?>
 
 </div>

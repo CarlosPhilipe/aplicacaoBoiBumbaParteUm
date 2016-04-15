@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Elemento;
+use frontend\models\Tipo;
+use frontend\models\TipoSearch;
 use frontend\models\ElementoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -98,12 +100,14 @@ class ElementoController extends Controller
     public function actionCreate()
     {
         $model = new Elemento();
+        $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idelemento]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'tipo' => $tipo,
             ]);
         }
     }
