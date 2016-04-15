@@ -16,12 +16,6 @@ use frontend\models\ElementoSearch;
         'method' => 'get',
     ]); ?>
 
-   <!--  <?= $form->field($model, 'idelemento') ?>
-
-    <?= $form->field($model, 'nome') ?>
-
-    <?= $form->field($model, 'descricao') ?>
- -->
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

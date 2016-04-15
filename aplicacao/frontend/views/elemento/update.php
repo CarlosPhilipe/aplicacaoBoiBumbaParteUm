@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
 
-$this->title = 'Atualizar Classe: ' . ' ' . $model->idelemento;
+$this->title = 'Atualizar Elemento: ' . ' ' . $model->idelemento;
 $this->params['breadcrumbs'][] = ['label' => 'Elemento', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->idelemento, 'url' => ['view', 'id' => $model->idelemento]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'tipo' => $tipo,
     ]) ?>
 
 </div>

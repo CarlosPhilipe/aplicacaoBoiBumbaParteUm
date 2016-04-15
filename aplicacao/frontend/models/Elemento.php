@@ -17,8 +17,12 @@ use Yii;
  * @property ParteContemElemento[] $parteContemElementos
  * @property Parte[] $parteIdpartes
  */
+
 class Elemento extends \yii\db\ActiveRecord
 {
+
+    public $tempoMinuto;
+    public $tempoSegundo;
     /**
      * @inheritdoc
      */
@@ -33,9 +37,11 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tempo', 'tipo_idtipo'], 'integer'],
+            [['tempo','tempoMinuto','tempoSegundo', 'tipo_idtipo'], 'integer'],
             [['descricao'], 'string'],
-            [['descricao','nome','tempo','tipo_idtipo'], 'required'],
+            [['descricao','nome','tipo_idtipo','tempoMinuto','tempoSegundo'], 'required'],
+            [['tempoSegundo'], 'integer', 'max' => 59, 'min'=>0],
+            [['tempoMinuto'], 'integer','max' => 60, 'min'=>0],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -51,6 +57,8 @@ class Elemento extends \yii\db\ActiveRecord
             'tempo' => 'Tempo em segundos',
             'descricao' => 'Descrição',
             'tipo_idtipo' => 'Tipo',
+            'tempoMinuto' => 'Duração Minutos',
+            'tempoSegundo' => 'Segundos', 
         ];
     }
 
@@ -77,4 +85,29 @@ class Elemento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Parte::className(), ['idparte' => 'parte_idparte'])->viaTable('parte_contem_elemento', ['elemento_idelemento' => 'idelemento']);
     }
+
+    public function beforeSave($insert)
+    {
+
+        $this->tempo = $this->tempoMinuto*60 + $this->tempoSegundo;
+
+        if (parent::beforeSave($insert)) 
+        {
+        // ...custom code here...
+            return true;
+        } 
+        else
+        {
+            return false;
+        }
+    }
+
+    public function afterFind()
+    {
+
+        $this->tempoSegundo = $this->tempo % 60;
+        $this->tempoMinuto = (($this->tempo - $this->tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        
+    }
+
 }
