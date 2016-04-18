@@ -24,13 +24,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
 
     </div>
 	<div id="row">
-    	<div class="col-md-3"><?= $form->field($model, 'tempoMinuto')->textInput(['placeholder' => 'Min'])?></div>
-        <div class="col-md-3"><?= $form->field($model, 'tempoSegundo')->textInput(['placeholder' => 'Seg', 'maxlength' => true])?></div>
+        <div class="col-md-6"><?= $form->field($model, 'tempoString')->widget(MaskedInput::className(), ['mask' => '99:99'])?></div>
     	<div class="col-md-6"><?= $form->field($model, 'descricao')->textArea(['maxlength' => true,  'rows' => 6, 'cols' => 30]) ?></div>
 
     </div>
-
-        
+     
 
 
     <div class="form-group">

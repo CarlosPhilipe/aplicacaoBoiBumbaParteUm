@@ -26,8 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'nome',
-            'tempoMinuto',
-            'tempoSegundo',
+            'tempoFormatado',
             'descricao',
 
             ['class' => 'yii\grid\ActionColumn'],

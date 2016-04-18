@@ -21,8 +21,8 @@ use Yii;
 class Elemento extends \yii\db\ActiveRecord
 {
 
-    public $tempoMinuto;
-    public $tempoSegundo;
+    public $tempoFormatado;
+    public $tempoString;
     /**
      * @inheritdoc
      */
@@ -37,11 +37,9 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tempo','tempoMinuto','tempoSegundo', 'tipo_idtipo'], 'integer'],
-            [['descricao'], 'string'],
-            [['descricao','nome','tipo_idtipo','tempoMinuto','tempoSegundo'], 'required'],
-            [['tempoSegundo'], 'integer', 'max' => 59, 'min'=>0],
-            [['tempoMinuto'], 'integer','max' => 60, 'min'=>0],
+            [['tempo', 'tipo_idtipo'], 'integer'],
+            [['descricao', 'tempoString'], 'string'],
+            [['descricao','nome','tipo_idtipo','tempoString'], 'required'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -57,8 +55,7 @@ class Elemento extends \yii\db\ActiveRecord
             'tempo' => 'Tempo em segundos',
             'descricao' => 'Descrição',
             'tipo_idtipo' => 'Tipo',
-            'tempoMinuto' => 'Duração Minutos',
-            'tempoSegundo' => 'Segundos', 
+            'tempoString' => 'Tempo', 
         ];
     }
 
@@ -88,8 +85,25 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
+        $tempoString = explode(":", $this->tempoString);
 
-        $this->tempo = $this->tempoMinuto*60 + $this->tempoSegundo;
+        if($tempoString[1]>= 59)
+        {
+            return false;
+        }
+        else
+        {
+            $this->tempo = $tempoString[0]*60 + $tempoString[1];
+        }
+
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // echo "<br>";
+        // var_dump ($tempoString);
+
+        //return false;
+       // $this->tempo = $this->tempoMinuto*60 + $this->tempoSegundo;
 
         if (parent::beforeSave($insert)) 
         {
@@ -104,10 +118,19 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function afterFind()
     {
-
-        $this->tempoSegundo = $this->tempo % 60;
-        $this->tempoMinuto = (($this->tempo - $this->tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        $tempoSegundo = $this->tempo % 60;
+        $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
+        $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
+        $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
+        
+        $this->tempoString = $tempoMinuto.$tempoSegundo;
+        $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+    }
+
+    private function zeroAEsquerda($var)
+    {
+        return ($var < 10? '0'.$var: $var);
     }
 
 }
