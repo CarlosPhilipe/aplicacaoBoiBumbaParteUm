@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= 'Elemento: '.$model->nome; ?></h1>
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idelemento], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idelemento], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-default',
             'data' => [
                 'confirm' => 'Tem certeza de que deseja excluir este item?',
                 'method' => 'post',

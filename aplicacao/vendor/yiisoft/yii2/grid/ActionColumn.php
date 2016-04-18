@@ -127,7 +127,7 @@ class ActionColumn extends Column
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                 //return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, $options);
-                return Html::a('<span class="btn btn-primary">Alterar</span>', $url, $options);
+                return Html::a('<span class="btn btn-primary">Atualizar</span>', $url, $options);
             };
         }
         if (!isset($this->buttons['delete'])) {
@@ -140,7 +140,7 @@ class ActionColumn extends Column
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                 //return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
-                return Html::a('<span class="btn btn-default">Excluir</span>', $url, $options);
+                return Html::a('<span class="btn btn-default">Remover</span>', $url, $options);
             };
          }
         // if (!isset($this->buttons['delete2'])) {
