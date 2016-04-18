@@ -140,21 +140,21 @@ class ActionColumn extends Column
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                 //return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
-                return Html::a('<span class="btn btn-danger">Excluir</span>', $url, $options);
+                return Html::a('<span class="btn btn-default">Excluir</span>', $url, $options);
             };
-        }
-        if (!isset($this->buttons['delete2'])) {
-            $this->buttons['delete2'] = function ($url, $model, $key) {
-                $options = array_merge([
-                    'title' => Yii::t('yii', 'Delete'),
-                    'aria-label' => Yii::t('yii', 'Delete'),
-                    'data-method' => 'post',
-                    'data-pjax' => '0',
-                ], $this->buttonOptions);
-               // return Html::a('<span>Desbloquear data</span>', $url, $options);
-                return Html::a('<span class="btn btn-danger">Desboquear Data</span>', $url, $options);
-            };
-        }
+         }
+        // if (!isset($this->buttons['delete2'])) {
+        //     $this->buttons['delete2'] = function ($url, $model, $key) {
+        //         $options = array_merge([
+        //             'title' => Yii::t('yii', 'Delete'),
+        //             'aria-label' => Yii::t('yii', 'Delete'),
+        //             'data-method' => 'post',
+        //             'data-pjax' => '0',
+        //         ], $this->buttonOptions);
+        //        // return Html::a('<span>Desbloquear data</span>', $url, $options);
+        //         return Html::a('<span class="btn btn-danger">Desboquear Data</span>', $url, $options);
+        //     };
+        // }
 
     }
 
