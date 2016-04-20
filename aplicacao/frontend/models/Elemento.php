@@ -88,7 +88,7 @@ class Elemento extends \yii\db\ActiveRecord
     {
         $tempoString = explode(":", $this->tempoString);
 
-        if($tempoString[1]>= 59)
+        if($tempoString[1]> 59)
         {
             return false;
         }

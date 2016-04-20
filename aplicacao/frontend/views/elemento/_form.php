@@ -25,16 +25,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     </div>
 	<div id="row">
         <div class="col-md-6"><?= $form->field($model, 'tempoString')->widget(MaskedInput::className(), ['mask' => '99:99'])?></div>
-    	<div class="col-md-6"><?= $form->field($model, 'descricao')->textArea(['maxlength' => true,  'rows' => 6, 'cols' => 30]) ?></div>
+        <div class="col-md-6"><?= $form->field($model, 'descricao')->textArea(['maxlength' => true,  'rows' => 6, 'cols' => 30]) ?></div>
 
+    </div>
+
+    <div id="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            </div>
+        </div>
     </div>
      
-
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
