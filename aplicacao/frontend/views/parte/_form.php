@@ -22,15 +22,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
     
     </div>
-	<div id="row">
-        <div class="col-md-6"><?= $form->field($model, 'idparte')?></div>
-    	
-    </div>
      
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="col-md-12">
+            <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

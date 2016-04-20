@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use frontend\models\ParteSearch;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\ElementoSeach*/
+/* @var $searchModel frontend\models\ParteSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Parte';
@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php   echo $this->render('_search', ['model' => $searchModel]); ?>
+   <!-- <?php   echo $this->render('_search', ['model' => $searchModel]); ?> -->
 
     <p>
-        <?= Html::a('Cadastrar elemento', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Cadastrar Parte', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,9 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'nome',
-            'tempoFormatado',
-            'descricao',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

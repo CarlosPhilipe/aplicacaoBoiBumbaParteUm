@@ -104,7 +104,7 @@ class ParteController extends Controller
         $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idparte]);
+            return $this->actionIndex();
         } else {
             return $this->render('create', [
                 'model' => $model,
