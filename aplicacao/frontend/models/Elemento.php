@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+
 use Yii;
 
 /**
@@ -118,6 +119,7 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function afterFind()
     {
+
         $tempoSegundo = $this->tempo % 60;
         $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
@@ -128,9 +130,14 @@ class Elemento extends \yii\db\ActiveRecord
         $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
     }
 
+
     private function zeroAEsquerda($var)
     {
         return ($var < 10? '0'.$var: $var);
     }
 
+    public function scopes() 
+    {
+        return ['nome' => ['order' => 'nome DESC']];
+    }
 }

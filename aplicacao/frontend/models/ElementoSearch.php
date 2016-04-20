@@ -66,6 +66,9 @@ class ElementoSearch extends Elemento
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);
         $query->andFilterWhere(['like', 'descricao', $this->descricao]);
+        $query = $query->orderBy([
+            'nome' => SORT_ASC,
+        ]);
 
         return $dataProvider;
     }
