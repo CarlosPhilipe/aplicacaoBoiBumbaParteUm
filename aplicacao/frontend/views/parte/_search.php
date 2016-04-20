@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use frontend\models\ElementoSearch;
+use frontend\models\ParteSearch;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\ClassesSearcg */
