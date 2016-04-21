@@ -5,13 +5,15 @@ namespace frontend\models;
 use Yii;
 use frontend\models\Elemento;
 use frontend\models\Parte;
-
 /**
  * This is the model class for table "parte_contem_elemento".
  *
  * @property integer $elemento_idelemento
  * @property integer $parte_idparte
  * @property string $ocorreu
+ * @property integer $posicao
+ * @property string $data_hora_inicio
+ * @property string $data_hora_fim
  *
  * @property Elemento $elementoIdelemento
  * @property Parte $parteIdparte
@@ -33,7 +35,8 @@ class ParteContemElemento extends \yii\db\ActiveRecord
     {
         return [
             [['elemento_idelemento', 'parte_idparte'], 'required'],
-            [['elemento_idelemento', 'parte_idparte'], 'integer'],
+            [['elemento_idelemento', 'parte_idparte', 'posicao'], 'integer'],
+            [['data_hora_inicio', 'data_hora_fim'], 'safe'],
             [['ocorreu'], 'string', 'max' => 1]
         ];
     }
@@ -47,6 +50,9 @@ class ParteContemElemento extends \yii\db\ActiveRecord
             'elemento_idelemento' => 'Elemento Idelemento',
             'parte_idparte' => 'Parte Idparte',
             'ocorreu' => 'Ocorreu',
+            'posicao' => 'Posicao',
+            'data_hora_inicio' => 'Data Hora Inicio',
+            'data_hora_fim' => 'Data Hora Fim',
         ];
     }
 
@@ -66,7 +72,7 @@ class ParteContemElemento extends \yii\db\ActiveRecord
         return $this->hasOne(Parte::className(), ['idparte' => 'parte_idparte']);
     }
 
-    public function saveAll($parte)
+       public function saveAll($parte)
     {
         $parteContemElemento = new ParteContemElemento();
         $parteContemElemento::deleteAll('parte_idparte = '.$parte->idparte);
@@ -81,6 +87,7 @@ class ParteContemElemento extends \yii\db\ActiveRecord
             $pce->elemento_idelemento = $idelemento;
             $pce->parte_idparte = $parte->idparte;
             $pce->ocorreu = '1';
+            $pce->posicao = 0;
             // echo "<br><br>".($pce->save());
             $pce->save();
         }
@@ -105,8 +112,8 @@ class ParteContemElemento extends \yii\db\ActiveRecord
             $elementos[] = $elementoCkd['elemento_idelemento']; 
         }
             
-        echo "<br><br><br><br><br><br>";
-        var_dump($elementos); 
+        // echo "<br><br><br><br><br><br>";
+        // var_dump($elementos); 
         return $elementos;
     }
 }
