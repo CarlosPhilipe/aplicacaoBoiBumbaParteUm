@@ -2,8 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\CActiveForm;
 use yii\widgets\MaskedInput;
 use yii\helpers\ArrayHelper;
+use frontend\models\Elemento;
+
 
 
 /* @var $this yii\web\View */
@@ -19,11 +22,20 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     <?php $form = ActiveForm::begin(); ?>
 
     <div id="row">
-    	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
+        <div class="col-md-12"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
     
     </div>
-     
 
+
+    <div id="row">
+        <div class="col-md-12">
+         <pre>
+         <?= Html::checkboxList('Parte[listElementos]',$model->listElementos,$elementos); ?>
+        </pre>
+        
+        </div>
+    
+    </div>
 
     <div class="form-group">
         <div class="col-md-12">

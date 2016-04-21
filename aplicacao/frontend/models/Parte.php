@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use Yii\Validators\NumberValidator\Type;
 
 /**
  * This is the model class for table "parte".
@@ -20,6 +21,8 @@ class Parte extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $listElementos;
+
     public static function tableName()
     {
         return 'parte';
@@ -31,7 +34,8 @@ class Parte extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'string', 'max' => 45]
+            [['nome'], 'string', 'max' => 45],
+            [['listElementos'],'safe'],
         ];
     }
 
@@ -43,6 +47,7 @@ class Parte extends \yii\db\ActiveRecord
         return [
             'idparte' => 'Idparte',
             'nome' => 'Nome',
+            'listElementos' => 'Lista de elementos',
         ];
     }
 
@@ -77,4 +82,11 @@ class Parte extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Elemento::className(), ['idelemento' => 'elemento_idelemento'])->viaTable('parte_contem_elemento', ['parte_idparte' => 'idparte']);
     }
+
+    public function saveAlll($parte)
+    {
+        
+    }
+
+
 }

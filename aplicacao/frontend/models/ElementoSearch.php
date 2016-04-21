@@ -20,7 +20,6 @@ class ElementoSearch extends Elemento
         return [
             [['tempo', 'tipo_idtipo'], 'integer'],
             [['descricao'], 'string'],
-          //  [['tipo_idtipo'], 'required'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -71,5 +70,31 @@ class ElementoSearch extends Elemento
         ]);
 
         return $dataProvider;
+    }
+
+    public static function getIdAndName()
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('idelemento,  nome, descricao')
+        ->from('elemento');
+        
+        $query = $query->orderBy([
+            'nome' => SORT_ASC,
+        ]);
+        $Elementos = $query->all();
+
+        
+        $listElemento= [];
+
+
+        foreach ($Elementos as $Elemento) 
+        {
+            $listElemento[$Elemento['idelemento']] = $Elemento['nome'].' | Descrição: '.$Elemento['descricao']; 
+
+        }
+         
+        return $listElemento;
+
     }
 }

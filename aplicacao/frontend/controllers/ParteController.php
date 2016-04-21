@@ -5,13 +5,14 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Parte;
 use frontend\models\Elemento;
-use frontend\models\Tipo;
-use frontend\models\TipoSearch;
+use frontend\models\ParteContemElemento;
+use frontend\models\ElementoSearch;
 use frontend\models\ParteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+
 
 /**
  * ParteController implements the CRUD actions for Parte model.
@@ -101,13 +102,17 @@ class ParteController extends Controller
     public function actionCreate()
     {
         $model = new Parte();
-        $tipo = TipoSearch::getIdAndName();
-
+        $elementos = ElementoSearch::getIdAndName();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           // echo "string";
+            $pce = new ParteContemElemento();
+            $pce->saveAll($model);
             return $this->actionIndex();
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'elementos' => $elementos,
 
             ]);
         }
@@ -122,14 +127,19 @@ class ParteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $tipo = TipoSearch::getIdAndName();
+         $elementos = ElementoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idparte]);
-        } else {
+            $pce = new ParteContemElemento();
+            $pce->saveAll($model);
+            return $this->actionIndex();
+        } 
+        else
+        {
+            $model->listElementos = $elementos;
             return $this->render('update', [
-                'model' => $model,
-                'tipo' => $tipo,
+                 'model' => $model,
+                 'elementos' => $elementos,
             ]);
         }
     }
