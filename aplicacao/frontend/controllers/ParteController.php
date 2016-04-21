@@ -110,10 +110,11 @@ class ParteController extends Controller
             $pce->saveAll($model);
             return $this->actionIndex();
         } else {
+            $elementosCkd = [];
             return $this->render('create', [
                 'model' => $model,
                 'elementos' => $elementos,
-
+                'elementosCkd' => $elementosCkd,
             ]);
         }
     }
@@ -136,10 +137,14 @@ class ParteController extends Controller
         } 
         else
         {
+            $pce = new ParteContemElemento();
+            $elementosCkd = $pce->getAllElementosParte($model->idparte);
+
             $model->listElementos = $elementos;
             return $this->render('update', [
                  'model' => $model,
                  'elementos' => $elementos,
+                 'elementosCkd' => $elementosCkd,
             ]);
         }
     }

@@ -30,7 +30,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     <div id="row">
         <div class="col-md-12">
          <pre>
-         <?= Html::checkboxList('Parte[listElementos]',$model->listElementos,$elementos); ?>
+         <?= Html::checkboxList('Parte[listElementos]',$elementosCkd,$elementos); ?>
         </pre>
         
         </div>

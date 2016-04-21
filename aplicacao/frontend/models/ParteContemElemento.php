@@ -86,4 +86,27 @@ class ParteContemElemento extends \yii\db\ActiveRecord
         }
 
     }
+
+    public function getAllElementosParte($idparte)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('idelemento, parte_idparte, elemento_idelemento')
+        ->from('parte_contem_elemento')
+        ->join('INNER JOIN', 'elemento','elemento.idelemento= parte_contem_elemento.elemento_idelemento')
+        ->where("parte_contem_elemento.parte_idparte = ".$idparte);
+
+        $listElementosCkd = $query->all();
+
+        $elementos= [];
+      
+        foreach ($listElementosCkd as $elementoCkd ) 
+        {
+            $elementos[] = $elementoCkd['elemento_idelemento']; 
+        }
+            
+        echo "<br><br><br><br><br><br>";
+        var_dump($elementos); 
+        return $elementos;
+    }
 }
