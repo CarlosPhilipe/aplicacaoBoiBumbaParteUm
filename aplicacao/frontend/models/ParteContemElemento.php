@@ -105,7 +105,7 @@ class ParteContemElemento extends \yii\db\ActiveRecord
 
         $listElementosCkd = $query->all();
 
-        $elementos= [];
+        $elementos = [];
       
         foreach ($listElementosCkd as $elementoCkd ) 
         {
