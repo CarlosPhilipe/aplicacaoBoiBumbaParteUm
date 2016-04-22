@@ -108,7 +108,10 @@ class ParteController extends Controller
            // echo "string";
             $pce = new ParteContemElemento();
             $pce->saveAll($model);
-            return $this->actionIndex();
+            
+            return $this->redirect(['ordenate', 'id' => $model->idparte]);
+
+            //return $this->actionOrdenate($model->idparte);//actionIndex();
         } else {
             $elementosCkd = [];
             return $this->render('create', [
@@ -130,6 +133,8 @@ class ParteController extends Controller
         $model = $this->findModel($id);
          $elementos = ElementoSearch::getIdAndName();
 
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $pce = new ParteContemElemento();
             $pce->saveAll($model);
@@ -138,7 +143,7 @@ class ParteController extends Controller
         else
         {
             $pce = new ParteContemElemento();
-            $elementosCkd = $pce->getAllElementosParte($model->idparte);
+            $elementosCkd = $pce->getAllIdsParte($model->idparte);
 
             $model->listElementos = $elementos;
             return $this->render('update', [
@@ -160,6 +165,33 @@ class ParteController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+
+
+    public function actionOrdenate($id)
+    {
+        $model = $this->findModel($id);
+
+         echo "<br><br><br><br><br><br>";
+        var_dump(Yii::$app->request->post());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) 
+        {
+             echo "string";
+            return $this->actionIndex();
+        }
+        else
+        { 
+            $pce = new ParteContemElemento();
+            $elementos= $pce->getAllElementosParte($model->idparte);
+
+            $model->listElementos = $elementos;
+            return $this->render('ordenate', [
+                'model' => $model,
+                 'elementos' => $elementos,
+            ]);
+        }
     }
 
     /**
