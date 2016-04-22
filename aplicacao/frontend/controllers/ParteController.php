@@ -109,7 +109,7 @@ class ParteController extends Controller
             $pce = new ParteContemElemento();
             $pce->saveAll($model);
             
-            return $this->redirect(['ordenate', 'id' => $model->idparte]);
+            return $this->actionIndex();
 
             //return $this->actionOrdenate($model->idparte);//actionIndex();
         } else {
@@ -132,7 +132,6 @@ class ParteController extends Controller
     {
         $model = $this->findModel($id);
          $elementos = ElementoSearch::getIdAndName();
-
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

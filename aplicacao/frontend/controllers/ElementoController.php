@@ -103,7 +103,8 @@ class ElementoController extends Controller
         $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idelemento]);
+            return $this->actionIndex();
+            //return $this->redirect(['view', 'id' => $model->idelemento]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -124,7 +125,7 @@ class ElementoController extends Controller
         $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idelemento]);
+            return $this->actionIndex();
         } else {
             return $this->render('update', [
                 'model' => $model,
