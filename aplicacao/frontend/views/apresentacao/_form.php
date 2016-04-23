@@ -20,15 +20,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
 
     <div id="row">
     	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
-    	
-
+        <div class="col-md-6"><?= $form->field($model, 'aberta')->dropDownList([false =>'Fechada',true =>'Aberta'], ['prompt'=>'Selecione']) ?> 
+    </div>	
     </div>
+
 	<div id="row">
         <div class="col-md-6"><?= $form->field($model, 'data_hora_inicio')?></div>
         <div class="col-md-6"><?= $form->field($model, 'data_hora_fim')?></div>
-
     </div>
-
     <div id="row">
         <div class="col-md-12">
             <div class="form-group">

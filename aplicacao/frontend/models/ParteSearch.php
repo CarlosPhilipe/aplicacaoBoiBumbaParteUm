@@ -64,4 +64,6 @@ class ParteSearch extends Parte
 
         return $dataProvider;
     }
+
+
 }

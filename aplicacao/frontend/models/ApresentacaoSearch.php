@@ -68,4 +68,32 @@ class ApresentacaoSearch extends Apresentacao
 
         return $dataProvider;
     }
+
+    public static function getIdAndName()
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('idapresentacao,  nome')
+        ->from('apresentacao');
+        
+        $query = $query->orderBy([
+            'nome' => SORT_ASC,
+        ]);
+        $tipos = $query->all();
+
+        
+        $listTipos= [];
+        $bairroId = [];
+
+
+        foreach ($tipos as $tipo) 
+        {
+            $listTipos[] = ['idapresentacao' => $tipo['idapresentacao'], 'nome' => $tipo['nome']]; 
+
+        }
+             
+            //$triagemPre = ['triagens'=> $triagemPre] ;
+        return $listTipos;
+
+    }
 }
