@@ -65,5 +65,23 @@ class ParteSearch extends Parte
         return $dataProvider;
     }
 
+    public function getAllPartesApresentacao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo, parte.* ')
+        ->from('parte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("idapresentacao = ".$idapresentacao)
+        ->groupBy(['parte.idparte']);
+
+        $partes = $query->all();
+
+        // echo "<br><br><br><br><br><br>";
+        //  var_dump($partes); 
+        return $partes;
+    }
+
 
 }

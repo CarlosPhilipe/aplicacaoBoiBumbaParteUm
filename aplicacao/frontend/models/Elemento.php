@@ -119,15 +119,34 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function afterFind()
     {
+        $tempoFormatado = $this->tempoFormatado($this->tempo);
+        
+        $this->tempoString = $tempoFormatado['tempoString'];
+        $this->tempoFormatado= $tempoFormatado['tempoFormatado'];
 
-        $tempoSegundo = $this->tempo % 60;
-        $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+
+        // $tempoSegundo =  % 60;
+        // $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        
+        // $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
+        // $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
+        
+        // $this->tempoString = $tempoMinuto.$tempoSegundo;
+        // $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+    }
+
+    public function tempoFormatado($tempo)
+    {
+        $tempoSegundo = $tempo % 60;
+        $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
         $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
         $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
         
-        $this->tempoString = $tempoMinuto.$tempoSegundo;
-        $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+        $tempoString = $tempoMinuto.$tempoSegundo;
+        $tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+
+        return ['tempoString' => $tempoString,'tempoFormatado' => $tempoFormatado];
     }
 
 

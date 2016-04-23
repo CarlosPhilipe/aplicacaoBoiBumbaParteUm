@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\models\Elemento;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= 'Apresentacao: '.$model->nome; ?></h1>
 
     <p>
+        <?= Html::a('Adinionar parte', ['addparte', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idapresentacao], [
             'class' => 'btn btn-default',
@@ -31,9 +33,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'data_hora_inicio',
             'data_hora_fim'
-
-            
         ],
     ]) ?>
+    <div id="row">
+          <table class="table table-striped">
+            <tr><th>Nome</th><th>Tempos</th><th></tr>
+             <?php foreach ($listPartes as $parte):?>
+                <tr>
+                    <td><?= $parte['nome'] ?></td>
+                    <td><?= (new Elemento())->tempoFormatado($parte['tempo'])['tempoFormatado'] ?></td>
+                </tr>
+            <?php endforeach?>
+          </table>  
+
+    </div>
+
+
+
 
 </div>

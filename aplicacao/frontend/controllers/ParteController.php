@@ -4,9 +4,9 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Parte;
-use frontend\models\Elemento;
+use frontend\models\Apresentacao;
 use frontend\models\ParteContemElemento;
-use frontend\models\ElementoSearch;
+use frontend\models\ApresentacaoSearch;
 use frontend\models\ParteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,7 +71,7 @@ class ParteController extends Controller
      * Lists all Parte models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($apresentacao)
     {
         $searchModel = new ParteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -79,6 +79,7 @@ class ParteController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'apresentacao' =>$apresentacao,
         ]);
     }
 
@@ -102,7 +103,7 @@ class ParteController extends Controller
     public function actionCreate()
     {
         $model = new Parte();
-        $elementos = ElementoSearch::getIdAndName();
+        $elementos = ApresentacaoSearch::getIdAndName();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
            // echo "string";
@@ -172,8 +173,8 @@ class ParteController extends Controller
     {
         $model = $this->findModel($id);
 
-         echo "<br><br><br><br><br><br>";
-        var_dump(Yii::$app->request->post());
+        //  echo "<br><br><br><br><br><br>";
+        // var_dump(Yii::$app->request->post());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) 
         {
