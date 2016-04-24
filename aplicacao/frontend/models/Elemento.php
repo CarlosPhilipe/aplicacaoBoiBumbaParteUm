@@ -43,7 +43,7 @@ class Elemento extends \yii\db\ActiveRecord
             [['tempo', 'parte_idparte', 'tipo_idtipo'], 'integer'],
             [['descricao'], 'string'],
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
-            [['parte_idparte', 'tipo_idtipo'], 'required'],
+            [['nome','tempoString','tipo_idtipo', 'descricao'], 'required'],
             [['nome', 'posicao'], 'string', 'max' => 45],
             [['ocorreu'], 'string', 'max' => 1]
         ];
@@ -63,8 +63,8 @@ class Elemento extends \yii\db\ActiveRecord
             'posicao' => 'Posicao',
             'data_hora_inicio' => 'Data Hora Inicio',
             'data_hora_fim' => 'Data Hora Fim',
-            'parte_idparte' => 'Parte Idparte',
-            'tipo_idtipo' => 'Tipo Idtipo',
+            'parte_idparte' => 'Parte',
+            'tipo_idtipo' => 'Tipo',
         ];
     }
 

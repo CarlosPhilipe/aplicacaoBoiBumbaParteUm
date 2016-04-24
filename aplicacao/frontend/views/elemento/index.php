@@ -8,7 +8,7 @@ use frontend\models\ElementoSearch;
 /* @var $searchModel frontend\models\ElementoSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Elemento';
+$this->title = 'Elemento da parte: '.$parte->nome;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">

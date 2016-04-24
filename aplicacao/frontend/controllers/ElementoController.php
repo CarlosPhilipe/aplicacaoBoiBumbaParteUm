@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Elemento;
+use frontend\models\Apresentacao;
+use frontend\models\Parte;
 use frontend\models\Tipo;
 use frontend\models\TipoSearch;
 use frontend\models\ElementoSearch;
@@ -72,13 +74,15 @@ class ElementoController extends Controller
     public function actionIndex()
     {
         $session = Yii::$app->session;
-        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
-        $idparte = isset($_SESSION['dados.parte']) ? $_SESSION['dados.parte'] : null;
+        $idapresentacao  = $session->get('dados.apresentacao');
+        $idparte = $session->get('dados.parte');
 
-        if ($idapresentacao == null)
+        if ($idapresentacao == null || $idparte == null)
         {
             return $this->redirect(['apresentacao/index']);
         }
+
+        $parte  = Parte::findOne($idparte);
 
         $searchModel = new ElementoSearch();
         $searchModel->parte_idparte = $idparte;
@@ -87,6 +91,7 @@ class ElementoController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'parte' => $parte,
         ]);
     }
 
@@ -111,6 +116,16 @@ class ElementoController extends Controller
     {
         $model = new Elemento();
         $tipo = TipoSearch::getIdAndName();
+
+        $session = Yii::$app->session;
+        $idparte = $session->get('dados.parte');
+
+        if ($idparte == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+        $model->parte_idparte = $idparte;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->actionIndex();

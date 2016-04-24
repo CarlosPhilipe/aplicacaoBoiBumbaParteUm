@@ -134,12 +134,13 @@ class ParteController extends Controller
     {
         $model = new Parte();
         $session = Yii::$app->session;
-            $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+        
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
 
-            if ($idapresentacao == null)
-            {
-                return $this->redirect(['apresentacao/index']);
-            }
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
         
         $apresentacao = Apresentacao::findOne($idapresentacao);
         $model->apresentacao_idapresentacao = $apresentacao->idapresentacao;
@@ -186,6 +187,30 @@ class ParteController extends Controller
             ]);
         }
     }
+
+
+
+
+    public function actionAddelemento($id)
+    {
+        $session = Yii::$app->session;
+       
+        $idapresentacao = $session->get('dados.apresentacao');
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+        $model = $this->findModel($id);
+
+         if (!empty($model)) 
+        {
+            return $this->redirect(['elemento/index', 'parte' => $model->idparte]);
+        } else {
+            return $this->actionIndex();
+        }
+    }
+
 
     /**
      * Deletes an existing Parte model.

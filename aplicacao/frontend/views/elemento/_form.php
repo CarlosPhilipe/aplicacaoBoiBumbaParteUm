@@ -21,12 +21,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     <div id="row">
     	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
     	<div class="col-md-6"><?= $form->field($model, 'tipo_idtipo')->dropDownList(ArrayHelper::map($tipo, 'idtipo', 'nome'), ['prompt'=>'Selecione']) ?></div>
-
     </div>
 	<div id="row">
         <div class="col-md-6"><?= $form->field($model, 'tempoString')->widget(MaskedInput::className(), ['mask' => '99:99'])?></div>
         <div class="col-md-6"><?= $form->field($model, 'descricao')->textArea(['maxlength' => true,  'rows' => 6, 'cols' => 30]) ?></div>
-
     </div>
 
     <div id="row">

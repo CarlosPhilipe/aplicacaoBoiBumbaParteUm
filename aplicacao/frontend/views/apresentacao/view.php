@@ -7,7 +7,7 @@ use frontend\models\Elemento;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
 
-$this->title = $model->idapresentacao;
+$this->title = 'Apresentacao: '.$model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Apresentacao', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_hora_fim',
             [                      // the owner name of the model
                 'label' => 'Obs:',
-                'value' => 'Somente vicíveis partes com tempo maior que zero',
+                'value' => 'Somente visíveis partes com tempo maior que zero',
             ]
         ],
     ]) ?>

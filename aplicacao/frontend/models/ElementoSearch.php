@@ -62,6 +62,7 @@ class ElementoSearch extends Elemento
         $query->andFilterWhere([
             'idelemento' => $this->idelemento,
             'tempo' => $this->tempo,
+            'parte_idparte' => $this->parte_idparte,
             'tipo_idtipo' => $this->tipo_idtipo,
         ]);
 
