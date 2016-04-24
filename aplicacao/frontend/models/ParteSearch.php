@@ -18,7 +18,7 @@ class ParteSearch extends Parte
     public function rules()
     {
         return [
-            [['idparte'], 'integer'],
+            [['idparte', 'apresentacao_idapresentacao'], 'integer'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -58,6 +58,7 @@ class ParteSearch extends Parte
    
         $query->andFilterWhere([
             'idparte' => $this->idparte,
+            'apresentacao_idapresentacao' => $this->apresentacao_idapresentacao,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

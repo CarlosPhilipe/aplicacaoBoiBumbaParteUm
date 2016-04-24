@@ -71,15 +71,28 @@ class ParteController extends Controller
      * Lists all Parte models.
      * @return mixed
      */
-    public function actionIndex($apresentacao)
+    public function actionIndex()
     {
+        $session = Yii::$app->session;
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
         $searchModel = new ParteSearch();
+        // para pegar somente as partes correspondentes ao id apresentacao
+        $searchModel->apresentacao_idapresentacao = $idapresentacao;
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $apresentacao = Apresentacao::findOne($idapresentacao);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'apresentacao' =>$apresentacao,
+             'apresentacao' =>$apresentacao,
         ]);
     }
 
@@ -103,7 +116,13 @@ class ParteController extends Controller
     public function actionCreate()
     {
         $model = new Parte();
-        $elementos = ApresentacaoSearch::getIdAndName();
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
            // echo "string";
@@ -114,11 +133,11 @@ class ParteController extends Controller
 
             //return $this->actionOrdenate($model->idparte);//actionIndex();
         } else {
-            $elementosCkd = [];
+            $apresentacao = Apresentacao::findOne($idapresentacao);
+
             return $this->render('create', [
                 'model' => $model,
-                'elementos' => $elementos,
-                'elementosCkd' => $elementosCkd,
+                'apresentacao ' => $apresentacao,
             ]);
         }
     }

@@ -8,7 +8,7 @@ use frontend\models\ParteSearch;
 /* @var $searchModel frontend\models\ParteSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Parte';
+$this->title = 'Partes da apresentção: '.$apresentacao->nome;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">
