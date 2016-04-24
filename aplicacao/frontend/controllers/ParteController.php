@@ -7,6 +7,7 @@ use frontend\models\Parte;
 use frontend\models\Apresentacao;
 use frontend\models\ParteContemElemento;
 use frontend\models\ApresentacaoSearch;
+use frontend\models\ElementoSearch;
 use frontend\models\ParteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -111,10 +112,16 @@ class ParteController extends Controller
             return $this->redirect(['apresentacao/index']);
         }
 
+       // echo "<>";
         $apresentacao = Apresentacao::findOne($idapresentacao);
+        $session['dados.parte'] = $id;
+
+        $elemento = new ElementoSearch();
+        $elementos = $elemento->getAllElementosParte($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
             'apresentacao' =>$apresentacao,
+            'listElementos' => $elementos,
         ]);
     }
 

@@ -18,9 +18,11 @@ class ElementoSearch extends Elemento
     public function rules()
     {
         return [
-            [['tempo', 'tipo_idtipo'], 'integer'],
+            [['tempo', 'parte_idparte', 'tipo_idtipo'], 'integer'],
             [['descricao'], 'string'],
-            [['nome'], 'string', 'max' => 45]
+            [['data_hora_inicio', 'data_hora_fim'], 'safe'],
+            [['nome', 'posicao'], 'string', 'max' => 45],
+            [['ocorreu'], 'string', 'max' => 1]
         ];
     }
 
@@ -96,5 +98,21 @@ class ElementoSearch extends Elemento
          
         return $listElemento;
 
+    }
+
+    public function getAllElementosParte($idparte)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select(' elemento.* ')
+        ->from('elemento')
+        ->join('INNER JOIN', 'parte','parte.idparte = elemento.parte_idparte')
+        ->where("idparte = ".$idparte);
+
+        $elementos = $query->all();
+
+         // echo "<br><br><br><br><br><br>";
+         //  var_dump($elementos); 
+        return $elementos;
     }
 }

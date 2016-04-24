@@ -71,7 +71,17 @@ class ElementoController extends Controller
      */
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+        $idparte = isset($_SESSION['dados.parte']) ? $_SESSION['dados.parte'] : null;
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
         $searchModel = new ElementoSearch();
+        $searchModel->parte_idparte = $idparte;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

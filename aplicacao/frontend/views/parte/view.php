@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\models\Elemento;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
@@ -36,4 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-</div>
+     <div id="row">
+              <table class="table table-striped">
+                <tr><th>Nome da Parte</th><th>Tempo</th><th></tr>
+                 <?php foreach ($listElementos as $elemento):?>
+                    <tr>
+                        <td><?= $elemento['nome'] ?></td>
+                        <td><?= (new Elemento())->tempoFormatado($elemento['tempo'])['tempoFormatado'] ?></td>
+                    </tr>
+                <?php endforeach?>
+              </table>  
+
+        </div>
+    </div>
