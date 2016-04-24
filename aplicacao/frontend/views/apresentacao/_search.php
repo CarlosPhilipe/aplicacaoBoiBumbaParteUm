@@ -16,11 +16,6 @@ use frontend\models\ElementoSearch;
         'method' => 'get',
     ]); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
-    </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

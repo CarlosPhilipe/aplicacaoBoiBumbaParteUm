@@ -30,7 +30,7 @@ class Parte extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['apresentacao_idapresentacao'], 'required'],
+            [['nome'], 'required'],
             [['apresentacao_idapresentacao'], 'integer'],
             [['nome'], 'string', 'max' => 45]
         ];
@@ -44,7 +44,7 @@ class Parte extends \yii\db\ActiveRecord
         return [
             'idparte' => 'Idparte',
             'nome' => 'Nome',
-            'apresentacao_idapresentacao' => 'Apresentacao Idapresentacao',
+            'apresentacao_idapresentacao' => 'Apresentação',
         ];
     }
 

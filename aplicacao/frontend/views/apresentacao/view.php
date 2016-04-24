@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= 'Apresentacao: '.$model->nome; ?></h1>
 
     <p>
-        <?= Html::a('Adinionar parte', ['addparte', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
+        
+        <?= Html::a('Gerenciar Partes', ['addparte', 'id' => $model->idapresentacao], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idapresentacao], [
             'class' => 'btn btn-default',
@@ -32,12 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'nome',
             'data_hora_inicio',
-            'data_hora_fim'
+            'data_hora_fim',
+            [                      // the owner name of the model
+                'label' => 'Obs:',
+                'value' => 'Somente vicíveis partes com tempo maior que zero',
+            ]
         ],
     ]) ?>
     <div id="row">
           <table class="table table-striped">
-            <tr><th>Nome</th><th>Tempos</th><th></tr>
+            <tr><th>Nome da Parte</th><th>Tempo</th><th></tr>
              <?php foreach ($listPartes as $parte):?>
                 <tr>
                     <td><?= $parte['nome'] ?></td>

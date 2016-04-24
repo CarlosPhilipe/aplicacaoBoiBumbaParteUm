@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
 
-$this->title = 'Cadastrar Parte';
+$this->title = 'Cadastrar Parte da apresentação: '.$apresentacao->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Parte', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'apresentacao ' => $apresentacao,
+        'apresentacao' => $apresentacao,
     ]) ?>
 
 </div>
