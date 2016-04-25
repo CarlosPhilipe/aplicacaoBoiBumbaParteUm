@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use frontend\models\ElementoSearch;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\ElementoSeach*/
@@ -15,6 +16,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php   echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= DetailView::widget([
+        'model' => $parte,
+        'attributes' => [
+            'nome',   // description attribute in HTML
+            [                      // the owner name of the model
+                'label' => 'Apresentação',
+                'value' => $apresentacao->nome,
+            ],  
+        ],
+    ]) ?>
 
     <p>
         <?= Html::a('Cadastrar elemento', ['create'], ['class' => 'btn btn-success']) ?>

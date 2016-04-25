@@ -83,7 +83,7 @@ class ElementoController extends Controller
         }
 
         $parte  = Parte::findOne($idparte);
-
+        $apresentacao = Apresentacao::findOne($idapresentacao);
         $searchModel = new ElementoSearch();
         $searchModel->parte_idparte = $idparte;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -92,6 +92,7 @@ class ElementoController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'parte' => $parte,
+            'apresentacao' => $apresentacao,
         ]);
     }
 

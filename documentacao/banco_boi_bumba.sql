@@ -156,8 +156,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `nome`, `sexo`, `auth_key`, `password_hash`, `password_reset_token`, `role`, `status`, `created_at`, `updated_at`, `endereco`, `complemento`, `instituicao`, `data_nasc`, `email`, `grupoacesso`, `cpf`, `tipo`) VALUES
 (16, '201032', 'carlos philipe mendes bahia', '0', 'xg6I_LrtWiIHyQmS3_mSzIMFy_-BG9-5', '$2y$13$oJNvsY/slghrD6uTp/qO8uQJ0ohELFSCFc7sOErXt4sALE2qUo3dK', '', '10', '10', '1452973046', '1452973046', '', '', '', NULL, 'carlosphbahia@gmail.com', 'gestor', '', NULL),
-(17, 'user', '', '', 'WiOo97NfQ0aoL35hfx8bysFdXxOjF72B', '$2y$13$UHgERuin0Ku5Cs4HYzo1T.EYxG0BigfXjntjc7P2jH8F/Fe9LClea', '', '10', '10', '1461350111', '1461350111', NULL, NULL, NULL, NULL, 'user@yii.com.hue.br', NULL, 'gestor', NULL),
-(18, 'marioacjr', '', '', 'B5B_dl3eo7jAi8lzOxkoFZL4AqfX-e5H', '$2y$13$Ex8uYDWHuqS6Le13r.SgEuuPbO6yphFjDX1X7mQI5SkuNjCcoIRIi', '', '10', '10', '1461236194', '1461236194', NULL, NULL, NULL, NULL, 'marioacjr@gmail.com', NULL, 'gestor', NULL);
+(17, 'user', '', '', 'WiOo97NfQ0aoL35hfx8bysFdXxOjF72B', '$2y$13$UHgERuin0Ku5Cs4HYzo1T.EYxG0BigfXjntjc7P2jH8F/Fe9LClea', '', '10', '10', '1461350111', '1461350111', '', '', '', NULL, 'user@yii.com.hue.br', 'gestor', '', NULL);
 
 --
 -- Indexes for dumped tables
