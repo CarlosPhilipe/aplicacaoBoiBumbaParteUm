@@ -116,7 +116,7 @@ class ActionColumn extends Column
                     'data-pjax' => '0',
                 ], $this->buttonOptions);
                // return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, $options);
-                return Html::a('<span class="btn btn-info">Ver</span>', $url, $options);
+                return Html::a('<span class="btn btn-info">Detalhar</span>', $url, $options);
             };
         }
         if (!isset($this->buttons['update'])) {
