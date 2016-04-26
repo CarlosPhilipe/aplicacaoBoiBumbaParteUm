@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Apresentação',
                 'value' => $apresentacao->nome,
             ],  
+            'tempo',
         ],
     ]) ?>
 
