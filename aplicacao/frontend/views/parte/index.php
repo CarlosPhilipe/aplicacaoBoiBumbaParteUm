@@ -15,11 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-   <!-- <?php   echo $this->render('_search', ['model' => $searchModel]); ?> -->
-
+  
     <?= DetailView::widget([
         'model' => $apresentacao,
-        'attributes' =>     
+        'attributes' => [    
             'nome',
             'data_hora_inicio',
             'data_hora_fim',
@@ -39,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'nome',
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\PersonalActionColumn'],
         ],
     ]); ?>
 

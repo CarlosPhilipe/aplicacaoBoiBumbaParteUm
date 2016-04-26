@@ -191,7 +191,7 @@ class ParteController extends Controller
 
 
 
-    public function actionAddelemento($id)
+    public function actionSeguer($id)
     {
         $session = Yii::$app->session;
        

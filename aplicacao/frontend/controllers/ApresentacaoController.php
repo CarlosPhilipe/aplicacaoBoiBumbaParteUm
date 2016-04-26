@@ -148,7 +148,7 @@ class ApresentacaoController extends Controller
     }
 
 
-    public function actionAddparte($id)
+    public function actionSeguer($id)
     {
         $model = $this->findModel($id);
 
