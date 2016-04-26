@@ -96,4 +96,22 @@ class ApresentacaoSearch extends Apresentacao
         return $listTipos;
 
     }
+
+    public function getTimeApresentacao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo')
+        ->from('parte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("idapresentacao = ".$idapresentacao)
+        ->groupBy(['idapresentacao']);
+
+        $partes = $query->one();
+
+         // echo "<br><br><br><br><br><br>";
+         //  var_dump($partes['tempo']); 
+        return $partes['tempo'];
+    }
 }

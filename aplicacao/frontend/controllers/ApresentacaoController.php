@@ -152,6 +152,21 @@ class ApresentacaoController extends Controller
     {
         $model = $this->findModel($id);
 
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+       // echo "<>";
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
+
         //echo "<br><br><br><br><br><br><br>";
         //var_dump($model);
         if (!empty($model)) 
