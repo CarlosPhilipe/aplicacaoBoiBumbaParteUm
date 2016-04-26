@@ -87,9 +87,11 @@ class ParteController extends Controller
         $searchModel->apresentacao_idapresentacao = $idapresentacao;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        // $dataProvider = $searchModel->search((new ParteSearch)->getAllPartesApresentacao($idapresentacao));
         $apresentacao = Apresentacao::findOne($idapresentacao);
 
+        // echo "<br><br><br><br><br><br>";
+        // var_dump($dataProvider);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

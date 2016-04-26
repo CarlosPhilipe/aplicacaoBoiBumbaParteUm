@@ -84,5 +84,22 @@ class ParteSearch extends Parte
         return $partes;
     }
 
+    public function getTimeParte($idparte)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo')
+        ->from('parte')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("parte.idparte = ".$idparte);
+
+        $partes = $query->one();
+
+        //echo "<br><br><br><br><br><br>";
+         //var_dump($partes['tempo']); 
+        return $partes['tempo'];
+    }
+
+
 
 }
