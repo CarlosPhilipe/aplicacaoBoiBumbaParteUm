@@ -80,6 +80,11 @@ class ApresentacaoController extends Controller
         ]);
     }
 
+     public function actionCronometro()
+    {
+        return $this->render('cronometro');
+    }
+
     /**
      * Displays a single Apresentacao model.
      * @param integer $id
@@ -147,6 +152,7 @@ class ApresentacaoController extends Controller
         }
     }
 
+    
 
     public function actionSeguer($id)
     {

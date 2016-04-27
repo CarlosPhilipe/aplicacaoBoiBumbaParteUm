@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         
-        <?= Html::a('Gerenciar Partes', ['addparte', 'id' => $model->idapresentacao], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Executar Apresentação', ['cronometro'], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idapresentacao], [
             'class' => 'btn btn-default',
