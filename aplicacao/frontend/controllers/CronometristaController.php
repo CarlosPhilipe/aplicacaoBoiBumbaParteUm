@@ -92,7 +92,11 @@ class CronometristaController extends Controller
     }
 
 
-
+    public function actionOcorrida($id)
+    {
+        
+        return $this->actionExecutar(); 
+    }
 
     /**
      * Lists all Elemento models.

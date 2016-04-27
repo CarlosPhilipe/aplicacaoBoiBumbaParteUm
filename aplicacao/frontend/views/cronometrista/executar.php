@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td><?= $elemento['nome']?></td>
                     <td><?= (new Elemento)->tempoFormatado($elemento['tempo'])['tempoFormatado']; ?></td>
-                    <td><?= Html::a('Executar', ['executa', 'id' => $elemento['idelemento']], ['class' => 'btn btn-success']) ?></td>
+                    <td><?= Html::a('Executar', ['ocorrida', 'id' => $elemento['idelemento']], ['class' => 'btn btn-success']) ?></td>
                 </tr>
             <?php endforeach ?>
         </table>
