@@ -50,10 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
             <?php endforeach?>
           </table>  
-
     </div>
-
-
-
+    <?= Html::a('Executar', ['cronometrista', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
 
 </div>

@@ -80,7 +80,33 @@ class ApresentacaoController extends Controller
         ]);
     }
 
-     public function actionCronometro()
+    public function actionCronometrista($id)
+    {
+        $model = $this->findModel($id);
+
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
+
+        //echo "<br><br><br><br><br><br><br>";
+        //var_dump($model);
+        if (!empty($model)) 
+        {
+            return $this->redirect(['cronometrista/executar']);
+        } else {
+            return $this->actionIndex();
+        }
+    }
+
+    public function actionCronometro()
     {
         return $this->render('cronometro');
     }
