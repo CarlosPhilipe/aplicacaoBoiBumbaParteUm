@@ -114,4 +114,17 @@ class ApresentacaoSearch extends Apresentacao
          //  var_dump($partes['tempo']); 
         return $partes['tempo'];
     }
+
+    public function getInicioExecucao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('data_hora_inicio_execucao')
+        ->from('apresentacao')
+        ->where("idapresentacao = ".$idapresentacao);
+
+        $inicioExecucao = $query->one();
+
+        return $inicioExecucao;
+    }
 }
