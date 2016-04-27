@@ -18,7 +18,7 @@ class ParteSearch extends Parte
     public function rules()
     {
         return [
-            [['idparte'], 'integer'],
+            [['idparte', 'apresentacao_idapresentacao'], 'integer'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -58,10 +58,48 @@ class ParteSearch extends Parte
    
         $query->andFilterWhere([
             'idparte' => $this->idparte,
+            'apresentacao_idapresentacao' => $this->apresentacao_idapresentacao,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }
+
+    public function getAllPartesApresentacao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo, parte.* ')
+        ->from('parte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("idapresentacao = ".$idapresentacao)
+        ->groupBy(['parte.idparte']);
+
+        $partes = $query->all();
+
+        // echo "<br><br><br><br><br><br>";
+        //  var_dump($partes); 
+        return $partes;
+    }
+
+    public function getTimeParte($idparte)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo')
+        ->from('parte')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("parte.idparte = ".$idparte);
+
+        $partes = $query->one();
+
+        //echo "<br><br><br><br><br><br>";
+         //var_dump($partes['tempo']); 
+        return $partes['tempo'];
+    }
+
+
+
 }

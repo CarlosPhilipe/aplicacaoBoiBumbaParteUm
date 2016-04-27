@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Apresentacao;
-use frontend\models\Tipo;
+use frontend\models\ParteSearch;
 use frontend\models\TipoSearch;
 use frontend\models\ApresentacaoSearch;
 use yii\web\Controller;
@@ -87,8 +87,24 @@ class ApresentacaoController extends Controller
      */
     public function actionView($id)
     {
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+       // echo "<>";
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
+    
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'listPartes' => $partes,
         ]);
     }
 
@@ -119,15 +135,45 @@ class ApresentacaoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $tipo = TipoSearch::getIdAndName();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) 
+        {
             return $this->redirect(['view', 'id' => $model->idapresentacao]);
         } else {
             return $this->render('update', [
                 'model' => $model,
 
             ]);
+        }
+    }
+
+
+    public function actionSeguer($id)
+    {
+        $model = $this->findModel($id);
+
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+       // echo "<>";
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
+
+        //echo "<br><br><br><br><br><br><br>";
+        //var_dump($model);
+        if (!empty($model)) 
+        {
+            return $this->redirect(['parte/index', 'apresentacao' => $model->idapresentacao, 'apresentacaoObj' =>$model]);
+        } else {
+            return $this->actionIndex();
         }
     }
 

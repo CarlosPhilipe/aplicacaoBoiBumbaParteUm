@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-
 use Yii;
 
 /**
@@ -12,21 +11,24 @@ use Yii;
  * @property string $nome
  * @property integer $tempo
  * @property string $descricao
+ * @property string $ocorreu
+ * @property string $posicao
+ * @property string $data_hora_inicio
+ * @property string $data_hora_fim
+ * @property integer $parte_idparte
  * @property integer $tipo_idtipo
  *
  * @property Tipo $tipoIdtipo
- * @property ParteContemElemento[] $parteContemElementos
- * @property Parte[] $parteIdpartes
+ * @property Parte $parteIdparte
  */
-
 class Elemento extends \yii\db\ActiveRecord
 {
-
-    public $tempoFormatado;
-    public $tempoString;
     /**
      * @inheritdoc
      */
+    public $tempoFormatado;
+    public $tempoString;
+
     public static function tableName()
     {
         return 'elemento';
@@ -38,10 +40,12 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tempo', 'tipo_idtipo'], 'integer'],
-            [['descricao', 'tempoString'], 'string'],
-            [['descricao','nome','tipo_idtipo','tempoString'], 'required'],
-            [['nome'], 'string', 'max' => 45]
+            [['tempo', 'parte_idparte', 'tipo_idtipo'], 'integer'],
+            [['descricao'], 'string'],
+            [['data_hora_inicio', 'data_hora_fim'], 'safe'],
+            [['nome','tempoString','tipo_idtipo', 'descricao'], 'required'],
+            [['nome', 'posicao'], 'string', 'max' => 45],
+            [['ocorreu'], 'string', 'max' => 1]
         ];
     }
 
@@ -51,12 +55,16 @@ class Elemento extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idelemento' => 'Elemento',
+            'idelemento' => 'Idelemento',
             'nome' => 'Nome',
-            'tempo' => 'Tempo em segundos',
-            'descricao' => 'Descrição',
+            'tempo' => 'Tempo',
+            'descricao' => 'Descricao',
+            'ocorreu' => 'Ocorreu',
+            'posicao' => 'Posicao',
+            'data_hora_inicio' => 'Data Hora Inicio',
+            'data_hora_fim' => 'Data Hora Fim',
+            'parte_idparte' => 'Parte',
             'tipo_idtipo' => 'Tipo',
-            'tempoString' => 'Tempo', 
         ];
     }
 
@@ -71,18 +79,12 @@ class Elemento extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParteContemElementos()
+    public function getParteIdparte()
     {
-        return $this->hasMany(ParteContemElemento::className(), ['elemento_idelemento' => 'idelemento']);
+        return $this->hasOne(Parte::className(), ['idparte' => 'parte_idparte']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getParteIdpartes()
-    {
-        return $this->hasMany(Parte::className(), ['idparte' => 'parte_idparte'])->viaTable('parte_contem_elemento', ['elemento_idelemento' => 'idelemento']);
-    }
+    
 
     public function beforeSave($insert)
     {
@@ -119,15 +121,34 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function afterFind()
     {
+        $tempoFormatado = $this->tempoFormatado($this->tempo);
+        
+        $this->tempoString = $tempoFormatado['tempoString'];
+        $this->tempoFormatado= $tempoFormatado['tempoFormatado'];
 
-        $tempoSegundo = $this->tempo % 60;
-        $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+
+        // $tempoSegundo =  % 60;
+        // $tempoMinuto = (($this->tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        
+        // $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
+        // $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
+        
+        // $this->tempoString = $tempoMinuto.$tempoSegundo;
+        // $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+    }
+
+    public function tempoFormatado($tempo)
+    {
+        $tempoSegundo = $tempo % 60;
+        $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
         $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
         $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
         
-        $this->tempoString = $tempoMinuto.$tempoSegundo;
-        $this->tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+        $tempoString = $tempoMinuto.$tempoSegundo;
+        $tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+
+        return ['tempoString' => $tempoString,'tempoFormatado' => $tempoFormatado];
     }
 
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\models\Elemento;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Classes */
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= 'Parte: '.$model->nome; ?></h1>
 
     <p>
+        <?= Html::a('Gerenciar Elementos', ['addelemento', 'id' => $model->idparte], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idparte], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idparte], [
             'class' => 'btn btn-default',
@@ -28,9 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nome',
-                      
+            'nome',   // description attribute in HTML
+            [                      // the owner name of the model
+                'label' => 'Apresentação',
+                'value' => $apresentacao->nome,
+            ],  
+            'tempo',
         ],
     ]) ?>
 
-</div>
+     <div id="row">
+              <table class="table table-striped">
+                <tr><th>Nome da Parte</th><th>Tempo</th><th></tr>
+                 <?php foreach ($listElementos as $elemento):?>
+                    <tr>
+                        <td><?= $elemento['nome'] ?></td>
+                        <td><?= (new Elemento())->tempoFormatado($elemento['tempo'])['tempoFormatado'] ?></td>
+                    </tr>
+                <?php endforeach?>
+              </table>  
+
+        </div>
+    </div>

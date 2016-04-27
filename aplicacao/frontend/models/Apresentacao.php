@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use frontend\models\ApresentacaoSearch;
 
 /**
  * This is the model class for table "apresentacao".
@@ -19,6 +20,10 @@ class Apresentacao extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $tempoFormatado;
+    public $tempoString;
+    public $tempo;
+
     public static function tableName()
     {
         return 'apresentacao';
@@ -31,6 +36,8 @@ class Apresentacao extends \yii\db\ActiveRecord
     {
         return [
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
+            [['aberta'],'boolean'],
+            [['nome','aberta', 'data_hora_inicio', 'data_hora_fim'],'required'],
             [['nome'], 'string', 'max' => 45]
         ];
     }
@@ -54,4 +61,38 @@ class Apresentacao extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Roteiro::className(), ['apresentacao_idapresentacao' => 'idapresentacao']);
     }
+public function afterFind()
+    {
+        $ps = new ApresentacaoSearch();
+        $this->tempo = $ps->getTimeApresentacao($this->idapresentacao);
+
+        $tempoFormatado = $this->tempoFormatado($this->tempo);
+        
+        $this->tempoString = $tempoFormatado['tempoString'];
+        $this->tempo = $tempoFormatado['tempoFormatado'];
+
+    }
+
+    public function tempoFormatado($tempo)
+    {
+        $tempoSegundo = $tempo % 60;
+        $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        
+        $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
+        $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
+        
+        $tempoString = $tempoMinuto.$tempoSegundo;
+        $tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+          
+
+        return ['tempoString' => $tempoString,'tempoFormatado' => $tempoFormatado];
+    }
+
+
+    private function zeroAEsquerda($var)
+    {
+        return ($var < 10? '0'.$var: $var);
+    }
+
 }
+

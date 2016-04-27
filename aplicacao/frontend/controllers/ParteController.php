@@ -4,8 +4,9 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Parte;
-use frontend\models\Elemento;
+use frontend\models\Apresentacao;
 use frontend\models\ParteContemElemento;
+use frontend\models\ApresentacaoSearch;
 use frontend\models\ElementoSearch;
 use frontend\models\ParteSearch;
 use yii\web\Controller;
@@ -73,12 +74,28 @@ class ParteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ParteSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $session = Yii::$app->session;
+        $idapresentacao  = $session->get('dados.apresentacao');
 
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+        $searchModel = new ParteSearch();
+        // para pegar somente as partes correspondentes ao id apresentacao
+        $searchModel->apresentacao_idapresentacao = $idapresentacao;
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // $dataProvider = $searchModel->search((new ParteSearch)->getAllPartesApresentacao($idapresentacao));
+        $apresentacao = Apresentacao::findOne($idapresentacao);
+
+        // echo "<br><br><br><br><br><br>".$session->get('dados.apresentacao');
+        // var_dump($dataProvider);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'apresentacao' =>$apresentacao,
         ]);
     }
 
@@ -89,8 +106,24 @@ class ParteController extends Controller
      */
     public function actionView($id)
     {
+        $session = Yii::$app->session;
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+       // echo "<>";
+        $apresentacao = Apresentacao::findOne($idapresentacao);
+        $session['dados.parte'] = $id;
+
+        $elemento = new ElementoSearch();
+        $elementos = $elemento->getAllElementosParte($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'apresentacao' =>$apresentacao,
+            'listElementos' => $elementos,
         ]);
     }
 
@@ -102,22 +135,25 @@ class ParteController extends Controller
     public function actionCreate()
     {
         $model = new Parte();
-        $elementos = ElementoSearch::getIdAndName();
+        $session = Yii::$app->session;
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           // echo "string";
-            $pce = new ParteContemElemento();
-            $pce->saveAll($model);
-            
-            return $this->redirect(['ordenate', 'id' => $model->idparte]);
+        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
 
-            //return $this->actionOrdenate($model->idparte);//actionIndex();
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+        
+        $apresentacao = Apresentacao::findOne($idapresentacao);
+        $model->apresentacao_idapresentacao = $apresentacao->idapresentacao;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->idparte]);
         } else {
-            $elementosCkd = [];
+            
             return $this->render('create', [
                 'model' => $model,
-                'elementos' => $elementos,
-                'elementosCkd' => $elementosCkd,
+                'apresentacao' => $apresentacao,
             ]);
         }
     }
@@ -131,28 +167,54 @@ class ParteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-         $elementos = ElementoSearch::getIdAndName();
+        $session = Yii::$app->session;
+            $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
 
+            if ($idapresentacao == null)
+            {
+                return $this->redirect(['apresentacao/index']);
+            }
+        
+        $apresentacao = Apresentacao::findOne($idapresentacao);
+        $model->apresentacao_idapresentacao = $apresentacao->idapresentacao;
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $pce = new ParteContemElemento();
-            $pce->saveAll($model);
-            return $this->actionIndex();
-        } 
-        else
-        {
-            $pce = new ParteContemElemento();
-            $elementosCkd = $pce->getAllIdsParte($model->idparte);
-
-            $model->listElementos = $elementos;
-            return $this->render('update', [
-                 'model' => $model,
-                 'elementos' => $elementos,
-                 'elementosCkd' => $elementosCkd,
+             return $this->redirect(['view', 'id' => $model->idparte]);
+        } else {
+            
+            return $this->render('create', [
+                'model' => $model,
+                'apresentacao' => $apresentacao,
             ]);
         }
     }
+
+
+
+
+    public function actionSeguer($id)
+    {
+        $session = Yii::$app->session;
+        $idapresentacao  = $session->get('dados.apresentacao');
+
+        if ($idapresentacao == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+       // echo "<>";
+        $session['dados.parte'] = $id;
+        $model = $this->findModel($id);
+
+         if (!empty($model)) 
+        {
+            return $this->redirect(['elemento/index', 'parte' => $model->idparte]);
+        } else {
+            return $this->actionIndex();
+        }
+    }
+
 
     /**
      * Deletes an existing Parte model.
@@ -167,32 +229,6 @@ class ParteController extends Controller
         return $this->redirect(['index']);
     }
 
-
-
-    public function actionOrdenate($id)
-    {
-        $model = $this->findModel($id);
-
-         echo "<br><br><br><br><br><br>";
-        var_dump(Yii::$app->request->post());
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) 
-        {
-             echo "string";
-            return $this->actionIndex();
-        }
-        else
-        { 
-            $pce = new ParteContemElemento();
-            $elementos= $pce->getAllElementosParte($model->idparte);
-
-            $model->listElementos = $elementos;
-            return $this->render('ordenate', [
-                'model' => $model,
-                 'elementos' => $elementos,
-            ]);
-        }
-    }
 
     /**
      * Finds the Parte model based on its primary key value.

@@ -13,15 +13,15 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
- * ActionColumn is a column for the [[GridView]] widget that displays buttons for viewing and manipulating the items.
+ * PersonalActionColumn is a column for the [[GridView]] widget that displays buttons for viewing and manipulating the items.
  *
- * To add an ActionColumn to the gridview, add it to the [[GridView::columns|columns]] configuration as follows:
+ * To add an PersonalActionColumn to the gridview, add it to the [[GridView::columns|columns]] configuration as follows:
  *
  * ```php
  * 'columns' => [
  *     // ...
  *     [
- *         'class' => ActionColumn::className(),
+ *         'class' => PersonalActionColumn::className(),
  *         // you may configure additional properties here
  *     ],
  * ]
@@ -30,7 +30,7 @@ use yii\helpers\Url;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ActionColumn extends Column
+class PersonalActionColumn extends Column
 {
     /**
      * @var string the ID of the controller that should handle the actions specified here.
@@ -46,15 +46,15 @@ class ActionColumn extends Column
      * specified in [[buttons]]. For example, the token `{view}` will be replaced by the result of
      * the callback `buttons['view']`. If a callback cannot be found, the token will be replaced with an empty string.
      *
-     * As an example, to only have the view, and update button you can add the ActionColumn to your GridView columns as follows:
+     * As an example, to only have the view, and update button you can add the PersonalActionColumn to your GridView columns as follows:
      *
      * ```
-     * ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update}'],
+     * ['class' => 'yii\grid\PersonalActionColumn', 'template' => '{view} {update}'],
      * ```
      *
      * @see buttons
      */
-    public $template = '{view} {update} {delete}';
+    public $template = '{seguer} {view} {update} {delete}';
     /**
      * @var array button rendering callbacks. The array keys are the button names (without curly brackets),
      * and the values are the corresponding button rendering callbacks. The callbacks should use the following
@@ -143,18 +143,18 @@ class ActionColumn extends Column
                 return Html::a('<span class="btn btn-default">Remover</span>', $url, $options);
             };
          }
-        // if (!isset($this->buttons['delete2'])) {
-        //     $this->buttons['delete2'] = function ($url, $model, $key) {
-        //         $options = array_merge([
-        //             'title' => Yii::t('yii', 'Delete'),
-        //             'aria-label' => Yii::t('yii', 'Delete'),
-        //             'data-method' => 'post',
-        //             'data-pjax' => '0',
-        //         ], $this->buttonOptions);
-        //        // return Html::a('<span>Desbloquear data</span>', $url, $options);
-        //         return Html::a('<span class="btn btn-danger">Desboquear Data</span>', $url, $options);
-        //     };
-        // }
+        if (!isset($this->buttons['seguer'])) {
+            $this->buttons['seguer'] = function ($url, $model, $key) {
+                $options = array_merge([
+                    'title' => Yii::t('yii', 'Delete'),
+                    'aria-label' => Yii::t('yii', 'Delete'),
+                    'data-method' => 'post',
+                    'data-pjax' => '0',
+                ], $this->buttonOptions);
+               // return Html::a('<span>Desbloquear data</span>', $url, $options);
+                return Html::a('<span class="btn btn-success">Ver</span>', $url, $options);
+            };
+        }
 
     }
 

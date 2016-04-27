@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\grid\PersonalActionColumn;
 use frontend\models\ApresentacaoSearch;
 
 /* @var $this yii\web\View */
@@ -26,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'nome',
+            'tempo',
             'data_hora_inicio',
             'data_hora_fim',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\PersonalActionColumn'],
         ],
     ]); ?>
+
 
 </div>

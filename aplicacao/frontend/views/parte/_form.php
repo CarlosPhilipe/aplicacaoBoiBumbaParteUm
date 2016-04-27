@@ -27,16 +27,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     </div>
 
 
-    <div id="row">
-        <div class="col-md-12">
-         <pre>
-         <?= Html::checkboxList('Parte[listElementos]',$elementosCkd,$elementos); ?>
-        </pre>
-        
-        </div>
-    
-    </div>
-
     <div class="form-group">
         <div class="col-md-12">
             <?= Html::submitButton($model->isNewRecord ? 'Cadastrar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

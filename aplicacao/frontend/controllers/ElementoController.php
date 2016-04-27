@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Elemento;
+use frontend\models\Apresentacao;
+use frontend\models\Parte;
 use frontend\models\Tipo;
 use frontend\models\TipoSearch;
 use frontend\models\ElementoSearch;
@@ -71,12 +73,26 @@ class ElementoController extends Controller
      */
     public function actionIndex()
     {
+        $session = Yii::$app->session;
+        $idapresentacao  = $session->get('dados.apresentacao');
+        $idparte = $session->get('dados.parte');
+
+        if ($idapresentacao == null || $idparte == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+        $parte  = Parte::findOne($idparte);
+        $apresentacao = Apresentacao::findOne($idapresentacao);
         $searchModel = new ElementoSearch();
+        $searchModel->parte_idparte = $idparte;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'parte' => $parte,
+            'apresentacao' => $apresentacao,
         ]);
     }
 
@@ -102,8 +118,19 @@ class ElementoController extends Controller
         $model = new Elemento();
         $tipo = TipoSearch::getIdAndName();
 
+        $session = Yii::$app->session;
+        $idparte = $session->get('dados.parte');
+
+        if ($idparte == null)
+        {
+            return $this->redirect(['apresentacao/index']);
+        }
+
+        $model->parte_idparte = $idparte;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idelemento]);
+            return $this->actionIndex();
+            //return $this->redirect(['view', 'id' => $model->idelemento]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -124,7 +151,7 @@ class ElementoController extends Controller
         $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idelemento]);
+            return $this->actionIndex();
         } else {
             return $this->render('update', [
                 'model' => $model,

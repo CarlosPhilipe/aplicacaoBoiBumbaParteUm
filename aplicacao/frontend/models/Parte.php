@@ -3,26 +3,25 @@
 namespace frontend\models;
 
 use Yii;
-use Yii\Validators\NumberValidator\Type;
-
+use frontend\models\ParteSearch;
 /**
  * This is the model class for table "parte".
  *
  * @property integer $idparte
  * @property string $nome
+ * @property integer $apresentacao_idapresentacao
  *
- * @property ParteCompoemRoteiro[] $parteCompoemRoteiros
- * @property Roteiro[] $roteiroIdroteiros
- * @property ParteContemElemento[] $parteContemElementos
- * @property Elemento[] $elementoIdelementos
+ * @property Elemento[] $elementos
+ * @property Apresentacao $apresentacaoIdapresentacao
  */
 class Parte extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public $listElementos;
-
+    public $tempoFormatado;
+    public $tempoString;
+    public $tempo;
     public static function tableName()
     {
         return 'parte';
@@ -34,8 +33,9 @@ class Parte extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'string', 'max' => 45],
-            [['listElementos'],'safe'],
+            [['nome'], 'required'],
+            [['apresentacao_idapresentacao'], 'integer'],
+            [['nome'], 'string', 'max' => 45]
         ];
     }
 
@@ -47,46 +47,57 @@ class Parte extends \yii\db\ActiveRecord
         return [
             'idparte' => 'Idparte',
             'nome' => 'Nome',
-            'listElementos' => 'Lista de elementos',
+            'apresentacao_idapresentacao' => 'Apresentação',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getParteCompoemRoteiros()
+    public function getElementos()
     {
-        return $this->hasMany(ParteCompoemRoteiro::className(), ['parte_idparte' => 'idparte']);
+        return $this->hasMany(Elemento::className(), ['parte_idparte' => 'idparte']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoteiroIdroteiros()
+    public function getApresentacaoIdapresentacao()
     {
-        return $this->hasMany(Roteiro::className(), ['idroteiro' => 'roteiro_idroteiro'])->viaTable('parte_compoem_roteiro', ['parte_idparte' => 'idparte']);
+        return $this->hasOne(Apresentacao::className(), ['idapresentacao' => 'apresentacao_idapresentacao']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getParteContemElementos()
+    public function afterFind()
     {
-        return $this->hasMany(ParteContemElemento::className(), ['parte_idparte' => 'idparte']);
-    }
+        $ps = new ParteSearch();
+        $this->tempo = $ps->getTimeParte($this->idparte);
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getElementoIdelementos()
-    {
-        return $this->hasMany(Elemento::className(), ['idelemento' => 'elemento_idelemento'])->viaTable('parte_contem_elemento', ['parte_idparte' => 'idparte']);
-    }
-
-    public function saveAlll($parte)
-    {
+        $tempoFormatado = $this->tempoFormatado($this->tempo);
         
+        $this->tempoString = $tempoFormatado['tempoString'];
+        $this->tempo = $tempoFormatado['tempoFormatado'];
+
     }
 
+    public function tempoFormatado($tempo)
+    {
+        $tempoSegundo = $tempo % 60;
+        $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        
+        $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
+        $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
+        
+        $tempoString = $tempoMinuto.$tempoSegundo;
+        $tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+          
+
+        return ['tempoString' => $tempoString,'tempoFormatado' => $tempoFormatado];
+    }
+
+
+    private function zeroAEsquerda($var)
+    {
+        return ($var < 10? '0'.$var: $var);
+    }
 
 }

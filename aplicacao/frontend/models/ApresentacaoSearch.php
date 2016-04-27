@@ -68,4 +68,50 @@ class ApresentacaoSearch extends Apresentacao
 
         return $dataProvider;
     }
+
+    public static function getIdAndName()
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('idapresentacao,  nome')
+        ->from('apresentacao');
+        
+        $query = $query->orderBy([
+            'nome' => SORT_ASC,
+        ]);
+        $tipos = $query->all();
+
+        
+        $listTipos= [];
+        $bairroId = [];
+
+
+        foreach ($tipos as $tipo) 
+        {
+            $listTipos[] = ['idapresentacao' => $tipo['idapresentacao'], 'nome' => $tipo['nome']]; 
+
+        }
+             
+            //$triagemPre = ['triagens'=> $triagemPre] ;
+        return $listTipos;
+
+    }
+
+    public function getTimeApresentacao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo')
+        ->from('parte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("idapresentacao = ".$idapresentacao)
+        ->groupBy(['idapresentacao']);
+
+        $partes = $query->one();
+
+         // echo "<br><br><br><br><br><br>";
+         //  var_dump($partes['tempo']); 
+        return $partes['tempo'];
+    }
 }
