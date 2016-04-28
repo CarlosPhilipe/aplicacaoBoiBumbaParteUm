@@ -61,7 +61,7 @@ class Apresentacao extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Roteiro::className(), ['apresentacao_idapresentacao' => 'idapresentacao']);
     }
-public function afterFind()
+    public function afterFind()
     {
         $ps = new ApresentacaoSearch();
         $this->tempo = $ps->getTimeApresentacao($this->idapresentacao);

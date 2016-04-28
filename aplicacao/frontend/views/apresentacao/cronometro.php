@@ -6,7 +6,6 @@ use yii\grid\PersonalActionColumn;
 use frontend\models\ApresentacaoSearch;
 
 
-
 $this->title = 'Cronômetro da Apresentação';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/cronometro.js',['depends' => [\yii\web\JqueryAsset::className()]]);
