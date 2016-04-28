@@ -22,7 +22,7 @@ class ElementoSearch extends Elemento
             [['descricao'], 'string'],
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
             [['nome', 'posicao'], 'string', 'max' => 45],
-            [['ocorreu'], 'string', 'max' => 1]
+            [['status'], 'string', 'max' => 1]
         ];
     }
 
