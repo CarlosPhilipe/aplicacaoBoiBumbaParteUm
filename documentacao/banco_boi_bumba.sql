@@ -1,20 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.4.10
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: 27-Abr-2016 às 20:47
--- Versão do servidor: 10.1.10-MariaDB
--- PHP Version: 7.0.4
+-- Host: localhost
+-- Generation Time: Apr 28, 2016 at 10:52 PM
+-- Server version: 5.5.42
+-- PHP Version: 7.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `event_cow`
@@ -23,7 +17,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `apresentacao`
+-- Table structure for table `apresentacao`
 --
 
 CREATE TABLE `apresentacao` (
@@ -33,19 +27,21 @@ CREATE TABLE `apresentacao` (
   `data_hora_fim` datetime DEFAULT NULL,
   `aberta` binary(1) DEFAULT NULL,
   `data_hora_inicio_execucao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `apresentacao`
+-- Dumping data for table `apresentacao`
 --
 
 INSERT INTO `apresentacao` (`idapresentacao`, `nome`, `data_hora_inicio`, `data_hora_fim`, `aberta`, `data_hora_inicio_execucao`) VALUES
-(1, 'Boi Bumbá em Parintins', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x31, NULL);
+(1, 'Boi Bumbá em Parintins', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x31, NULL),
+(2, 'Segunda noite', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, NULL),
+(3, 'nova', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `elemento`
+-- Table structure for table `elemento`
 --
 
 CREATE TABLE `elemento` (
@@ -53,28 +49,33 @@ CREATE TABLE `elemento` (
   `nome` varchar(45) DEFAULT NULL,
   `tempo` int(11) DEFAULT NULL,
   `descricao` text,
-  `ocorreu` binary(1) DEFAULT NULL,
+  `status` char(1) DEFAULT NULL,
   `posicao` varchar(45) DEFAULT NULL,
   `data_hora_inicio` datetime DEFAULT NULL,
   `data_hora_fim` datetime DEFAULT NULL,
   `parte_idparte` int(11) NOT NULL,
   `tipo_idtipo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `elemento`
+-- Dumping data for table `elemento`
 --
 
-INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `ocorreu`, `posicao`, `data_hora_inicio`, `data_hora_fim`, `parte_idparte`, `tipo_idtipo`) VALUES
-(2, 'Cantoria', 720, NULL, 0x00, '2', NULL, NULL, 1, 1),
-(3, 'Trilha', 82, NULL, 0x00, '1', NULL, NULL, 1, 1),
+INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `status`, `posicao`, `data_hora_inicio`, `data_hora_fim`, `parte_idparte`, `tipo_idtipo`) VALUES
+(2, 'Cantoria', 720, 'qwje ', '0', '2', NULL, NULL, 1, 1),
+(3, 'Trilha', 82, 'algo', '0', '1', NULL, NULL, 1, 1),
 (4, 'canto novo', 200, NULL, NULL, NULL, NULL, NULL, 2, 1),
-(5, 'anhanguera', 300, 'akjfa', NULL, NULL, NULL, NULL, 3, 1);
+(5, 'anhanguera', 300, 'akjfa', NULL, NULL, NULL, NULL, 3, 1),
+(6, 'canto inicial', 300, 'canto', NULL, NULL, NULL, NULL, 4, 1),
+(7, 'Elemento criado', 754, 'novo', NULL, NULL, NULL, NULL, 4, 2),
+(8, 'vida terra', 480, 'nova', NULL, NULL, NULL, NULL, 4, 1),
+(9, 'abre boca', 280, 'trilha linda', NULL, NULL, NULL, NULL, 4, 2),
+(10, 'novo', 671, 'asc as', NULL, NULL, NULL, NULL, 6, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `migration`
+-- Table structure for table `migration`
 --
 
 CREATE TABLE `migration` (
@@ -83,7 +84,7 @@ CREATE TABLE `migration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `migration`
+-- Dumping data for table `migration`
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
@@ -92,37 +93,40 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `parte`
+-- Table structure for table `parte`
 --
 
 CREATE TABLE `parte` (
   `idparte` int(11) NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
   `apresentacao_idapresentacao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `parte`
+-- Dumping data for table `parte`
 --
 
 INSERT INTO `parte` (`idparte`, `nome`, `apresentacao_idapresentacao`) VALUES
 (1, 'Parte 1', 1),
 (2, 'Parte 2', 1),
-(3, 'Parte 3', 1);
+(3, 'Parte 3', 1),
+(4, 'Parte 1', 2),
+(5, 'primeira', 2),
+(6, 'Parte 1', 3);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tipo`
+-- Table structure for table `tipo`
 --
 
 CREATE TABLE `tipo` (
   `idtipo` int(11) NOT NULL,
   `nome` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `tipo`
+-- Dumping data for table `tipo`
 --
 
 INSERT INTO `tipo` (`idtipo`, `nome`) VALUES
@@ -132,7 +136,7 @@ INSERT INTO `tipo` (`idtipo`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -155,10 +159,10 @@ CREATE TABLE `user` (
   `grupoacesso` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cpf` varchar(14) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Extraindo dados da tabela `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `nome`, `sexo`, `auth_key`, `password_hash`, `password_reset_token`, `role`, `status`, `created_at`, `updated_at`, `endereco`, `complemento`, `instituicao`, `data_nasc`, `email`, `grupoacesso`, `cpf`, `tipo`) VALUES
@@ -217,44 +221,40 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `apresentacao`
 --
 ALTER TABLE `apresentacao`
-  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `elemento`
 --
 ALTER TABLE `elemento`
-  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `parte`
 --
 ALTER TABLE `parte`
-  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `idtipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idtipo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Limitadores para a tabela `elemento`
+-- Constraints for table `elemento`
 --
 ALTER TABLE `elemento`
   ADD CONSTRAINT `fk_elemento_parte1` FOREIGN KEY (`parte_idparte`) REFERENCES `parte` (`idparte`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_elemento_tipo` FOREIGN KEY (`tipo_idtipo`) REFERENCES `tipo` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `parte`
+-- Constraints for table `parte`
 --
 ALTER TABLE `parte`
   ADD CONSTRAINT `fk_parte_apresentacao1` FOREIGN KEY (`apresentacao_idapresentacao`) REFERENCES `apresentacao` (`idapresentacao`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
