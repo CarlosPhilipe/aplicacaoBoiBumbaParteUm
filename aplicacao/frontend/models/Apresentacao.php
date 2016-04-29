@@ -53,7 +53,8 @@ class Apresentacao extends \yii\db\ActiveRecord
             'nome' => 'Nome da Apresentacao',
             'data_hora_inicio' => 'Data e Hora do Inicio',
             'data_hora_fim' => 'Data e Hora do Fim',
-            'tempoPlanejado' => 'Duração'
+            'tempoPlanejado' => 'Duração estimada',
+            'tempo' => 'Soma dos elementos',
         ];
     }
 
