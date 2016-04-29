@@ -23,6 +23,7 @@ class Apresentacao extends \yii\db\ActiveRecord
     public $tempoFormatado;
     public $tempoString;
     public $tempo;
+    public $tempoApresentacao;
     public $tempoPlanejado;
 
     public static function tableName()
@@ -74,9 +75,11 @@ class Apresentacao extends \yii\db\ActiveRecord
 
          $inicio = strToTime($this->data_hora_inicio);
          $fim = strToTime($this->data_hora_fim);
+
          $tempoPlanejado = $fim - $inicio;
          $this->tempoPlanejado = $this->tempoFormatado($tempoPlanejado)['tempoFormatado'];
 
+         $this->tempoApresentacao = $tempoPlanejado;
     }
 
     public function tempoFormatado($tempo)
