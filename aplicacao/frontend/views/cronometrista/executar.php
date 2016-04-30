@@ -20,9 +20,12 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
 $this->title = 'Apresentação: '.$apresentacao->nome;
 $this->params['breadcrumbs'][] = $this->title;
+$horas = 1;
+$minutos=32;
+$segundos = 25;
 ?>
-<div class="classes-index">
 
+<div class="classes-index">
     <div class="container">
       
         <div class="col-md-12 text-center center-block">
@@ -30,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
       
         <div class="marginTop col-md-12 text-center center-block">
-            <button id="btn" onclick="cronometro()" type="button" class="col-md-2 col-md-offset-5 btn btn-success">Iniciar</button>
+            <button id="btn" onclick="cronometro(1)" type="button" class="col-md-2 col-md-offset-5 btn btn-success">Iniciar</button>
         </div>
        
         <div class="marginTop col-md-12 text-center center-block">
@@ -56,9 +59,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
+    <div class="input-group">
+        <input id="horas" type="hidden" value="<?php echo $horas; ?>" class="form-control" placeholder="Horas">
+        <input id="minutos" type="hidden" value="<?php echo $minutos; ?>" class="form-control" placeholder="Minutos">
+        <input id="segundos" type="hidden"  value="<?php echo $segundos; ?>" class="form-control" placeholder="Segundos">
+    </div>
+
 </div>
 
-<div class="classes-index">
-
-    
-    </div>

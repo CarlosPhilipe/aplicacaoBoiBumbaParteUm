@@ -4,7 +4,13 @@ var minuto = new Number();
 var segundo = new Number();
 var time 	= new Number();
 
-function cronometro(){
+function cronometro(aux){
+	if(aux == 1){
+		hora = parseInt(($('#horas').val() === '' ? 0 : $('#horas').val()));
+		minuto = parseInt(($('#minutos').val() === '' ? 0 : $('#minutos').val()));
+		segundo = parseInt(($('#segundos').val() === '' ? 0 : $('#segundos').val()));
+	}
+
 	$('#btnStop').removeClass('hide');
 	$('#btn').addClass('disabled');
 	
