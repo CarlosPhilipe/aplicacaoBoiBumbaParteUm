@@ -139,7 +139,7 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function tempoFormatado($tempo)
     {
-        $tempoSegundo = $tempo % 60;
+        $tempoSegundo = intval($tempo) % 60;
         $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
         $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);

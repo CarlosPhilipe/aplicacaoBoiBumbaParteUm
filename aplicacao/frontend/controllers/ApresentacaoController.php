@@ -111,9 +111,9 @@ class ApresentacaoController extends Controller
         $model = $this->findModel($id);
 
         // Cálculo dos segundos do inicio da execução
-        $aux = $model->data_hora_inicio_execucao;
-        $datetimedb = explode(" ", $aux);
-        $timedb = explode(":", $datetimedb[1]);
+        $datetimedb = $model->data_hora_inicio_execucao;
+        $date_time_db = explode(" ", $datetimedb);
+        $timedb = explode(":", $date_time_db[1]);
         $segundosdb = (intval($timedb[0])*3600)+(intval($timedb[1])*60)+intval($timedb[2]);
 
         // Cáculo dos segundos do horário atual
@@ -136,6 +136,7 @@ class ApresentacaoController extends Controller
             'id' => $model->idapresentacao,
             'nome' => $model->nome,
             'status' => $model->status_execucao,
+            'datetimedb' => $datetimedb,
             'segundos' => $segundos,
             'minutos' => $minutos,
             'horas' => $horas,
