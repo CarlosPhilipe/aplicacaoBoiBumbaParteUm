@@ -151,8 +151,6 @@ class ApresentacaoController extends Controller
      */
     public function actionView($id)
     {
-        $parte = new ParteSearch();
-        $partes = $parte->getAllPartesApresentacao($id);
        // echo "<>";
         $session = Yii::$app->session;
 
@@ -165,10 +163,14 @@ class ApresentacaoController extends Controller
         }
         // aqui seto o id da apresentacao
         $session['dados.apresentacao'] = $id;
+
+        // Geração do parametro das partes
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
     
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'listPartes' => $partes,
+            'partes' => $partes,
         ]);
     }
 

@@ -9,7 +9,7 @@ use frontend\models\ApresentacaoSearch;
 /* @var $searchModel frontend\models\ApresentacaoSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Apresentacao';
+$this->title = 'Apresentações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">
