@@ -4,7 +4,7 @@ var minuto = new Number();
 var segundo = new Number();
 var time 	= new Number();
 
-function cronometro(aux){
+function cronometroGeral(aux){
 	if(aux == 1){
 		hora = parseInt(($('#horas').val() === '' ? 0 : $('#horas').val()));
 		minuto = parseInt(($('#minutos').val() === '' ? 0 : $('#minutos').val()));
@@ -13,6 +13,8 @@ function cronometro(aux){
 
 	$('#btnStop').removeClass('hide');
 	$('#btn').addClass('hide');
+	$('#tempo').removeClass('hide');
+	$('#parcial').removeClass('hide');
 	
 	if(segundo>59){
 		segundo=0;
@@ -48,8 +50,8 @@ function cronometro(aux){
 		time=""+hora+time;
 	}
 	
-	tempo.innerText=time;
-	setTimeout('cronometro();',1000);
+	tempo.innerText="Total: "+time;
+	setTimeout('cronometroGeral();',1000);
 	
 	segundo=segundo+1;	
 }

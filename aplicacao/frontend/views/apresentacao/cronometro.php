@@ -32,21 +32,28 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
 	<br>
 
-    <div class="container text-left col-xs-offset-1">
-
-        
-            <button id="tempo" class="btn-cronometrista btn-primary">00:00:00</button>
-            <button id="btn" onclick="cronometro(<?=$status?>)" type="button" class="btn btn-lg btn-success">Iniciar</button>
-            <button id="btnStop" onclick="stop()" type="button" class="btn hide btn-lg btn-warning">Finalizar</button>
-           
+    <div class="container text-center">        
+        <button id="tempo" class="btn-cronometrista btn-primary hide">00:00:00</button>
+        <button id="parcial" class="btn-cronometrista btn-sucess hide">Parcial: 00:00:00</button>         
     </div>
 
-    <br><br>
+    <br>
+
+    <div class="container text-center">        
+        <button id="btn" onclick="cronometroGeral(<?=$status?>)" type="button" class="btn btn-lg btn-success">Mostrar Cronômetros</button>
+        <button id="btnStop" onclick="stop()" type="button" class="btn hide btn-lg btn-warning">Ocultar</button>           
+    </div>
+
+    <br>
 
     <div class="input-group">
-        <input id="horas" type="hidden" value="<?php echo $horas; ?>" class="form-control" placeholder="Horas">
-        <input id="minutos" type="hidden" value="<?php echo $minutos; ?>" class="form-control" placeholder="Minutos">
-        <input id="segundos" type="hidden"  value="<?php echo $segundos; ?>" class="form-control" placeholder="Segundos">
+        <input id="horas" type="hidden" value="<?php echo $horas ?>" class="form-control" placeholder="Horas">
+        <input id="minutos" type="hidden" value="<?php echo $minutos ?>" class="form-control" placeholder="Minutos">
+        <input id="segundos" type="hidden"  value="<?php echo $segundos ?>" class="form-control" placeholder="Segundos">
+
+        <input id="horasParcial" type="hidden" value="<?php echo $horas ?>" class="form-control" placeholder="Horas">
+        <input id="minutosParcial" type="hidden" value="<?php echo $minutos ?>" class="form-control" placeholder="Minutos">
+        <input id="segundosParcial" type="hidden"  value="<?php echo $segundos ?>" class="form-control" placeholder="Segundos">
     </div>
 
     <table class="table table-bordered table-striped table-responsive">
@@ -82,6 +89,32 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
                   </tbody>
               <?php endforeach?>
           <?php endforeach?>                        
-    </table> 
+    </table>
+
+    <br><br>
+    <h3>Histórico Realizado</h3>
+    <table class="table table-bordered table-striped table-responsive">
+    	<thead>
+            <tr>
+                <th>Elemento</th>
+                <th class='text-center'>Tempo consumido</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class='text-center'>
+                <td>Cantoria</td>
+                <td>13:10</td>
+            </tr>
+            <tr class='text-center'>
+                <td>canto novo</td>
+                <td>3:35</td>
+            </tr>
+            <tr class='text-center'>
+                <td align="right"><strong>TOTAL</strong></td>
+                <td><strong>16:45</strong></td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
