@@ -12,7 +12,7 @@ function cronometro(aux){
 	}
 
 	$('#btnStop').removeClass('hide');
-	$('#btn').addClass('disabled');
+	$('#btn').addClass('hide');
 	
 	if(segundo>59){
 		segundo=0;

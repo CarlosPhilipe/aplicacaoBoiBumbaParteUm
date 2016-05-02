@@ -106,9 +106,41 @@ class ApresentacaoController extends Controller
         }
     }
 
-    public function actionCronometro()
+    public function actionCronometro($id)
     {
-        return $this->render('cronometro');
+        $model = $this->findModel($id);
+
+        // Cálculo dos segundos do inicio da execução
+        $aux = $model->data_hora_inicio_execucao;
+        $datetimedb = explode(" ", $aux);
+        $timedb = explode(":", $datetimedb[1]);
+        $segundosdb = (intval($timedb[0])*3600)+(intval($timedb[1])*60)+intval($timedb[2]);
+
+        // Cáculo dos segundos do horário atual
+        $datetimenow = explode(" ", date("Y-m-d H:i:s"));
+        $timenow = explode(":", $datetimenow[1]);
+        $segundosnow = (intval($timenow[0])*3600)+(intval($timenow[1])*60)+intval($timenow[2]);
+        
+        // Geração dos parâmetros de tempo
+        $diferenca = $segundosnow-$segundosdb;
+        $horas = $diferenca / 3600;
+        $minutos = ($diferenca % 3600) / 60 ;
+        $segundos = ($diferenca % 3600) % 60;
+
+        // Geração do parametro das partes
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+
+
+        return $this->render('cronometro', [
+            'id' => $model->idapresentacao,
+            'nome' => $model->nome,
+            'status' => $model->status_execucao,
+            'segundos' => $segundos,
+            'minutos' => $minutos,
+            'horas' => $horas,
+            'partes' => $partes,
+        ]);
     }
 
     /**

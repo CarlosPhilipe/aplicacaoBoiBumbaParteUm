@@ -51,6 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 
           </table>  
     </div>
-    <?= Html::a('Executar', ['cronometrista', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Executar', ['cronometro', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
 
 </div>
