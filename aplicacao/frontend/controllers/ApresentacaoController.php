@@ -106,9 +106,14 @@ class ApresentacaoController extends Controller
         }
     }
 
-    public function actionCronometro($id)
+    public function actionExecutar_apresentacao($id)
     {
+
         $model = $this->findModel($id);
+
+        if ($model->status_execucao == 0) {
+            Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_inicio_execucao' => date("Y-m-d H:i:s"), 'data_hora_termino_execucao' => null, 'status_execucao' => 1], 'idapresentacao = '.$id)->execute();
+        }
 
         // Cálculo dos segundos do inicio da execução
         $datetimedb = $model->data_hora_inicio_execucao;
@@ -142,6 +147,31 @@ class ApresentacaoController extends Controller
             'horas' => $horas,
             'partes' => $partes,
         ]);
+
+    }
+
+    public function actionParar_apresentacao($id)
+    {
+        $model = $this->findModel($id);
+
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+
+        if($model->status_execucao == 1){
+            Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_termino_execucao' => date("Y-m-d H:i:s"), 'status_execucao' => 0], 'idapresentacao = '.$id)->execute();
+        }
+
+        return $this->render('cronometro', [
+            'id' => $model->idapresentacao,
+            'nome' => $model->nome,
+            'status' => $model->status_execucao,
+            'datetimedb' => null,
+            'segundos' => null,
+            'minutos' => null,
+            'horas' => null,
+            'partes' => $partes,
+        ]);
+
     }
 
     /**

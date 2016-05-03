@@ -33,7 +33,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 	<br>
 
     <div class="container text-center">        
-        <button id="tempo" class="btn-cronometrista btn-primary hide">00:00:00</button>
+        <button id="tempo" class="btn-cronometrista btn-primary hide">Total: 00:00:00</button>
         <button id="parcial" class="btn-cronometrista btn-sucess hide">Parcial: 00:00:00</button>         
     </div>
 
@@ -41,7 +41,8 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
     <div class="container text-center">        
         <button id="btn" onclick="cronometroGeral(<?=$status?>)" type="button" class="btn btn-lg btn-success">Mostrar Cronômetros</button>
-        <button id="btnStop" onclick="stop()" type="button" class="btn hide btn-lg btn-warning">Ocultar</button>           
+        <?= Html::a('Executar Apresentação', ['executar_apresentacao', 'id' => $id], ['class' => 'btn btn-lg btn-warning']) ?>
+        <?= Html::a('Parar Apresentação', ['parar_apresentacao', 'id' => $id], ['class' => 'btn btn-lg btn-warning']) ?>
     </div>
 
     <br>
@@ -80,7 +81,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
                           			if(intval(intval($elemento['tempo'])%60)<10){
                           				echo 0;
                           			}
-                          			echo intval(intval($elemento['tempo'])%60) ?></td>;
+                          			echo intval(intval($elemento['tempo'])%60) ?></td>
                           <td>
                               <?= Html::a('Contabilizar', ['cronometro', 'id' => $id], ['class' => 'btn btn-primary']) ?>
                               <?= Html::a('cancelar', ['cronometro', 'id' => $id], ['class' => 'btn btn-warning']) ?>

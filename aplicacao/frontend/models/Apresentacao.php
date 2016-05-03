@@ -39,6 +39,7 @@ class Apresentacao extends \yii\db\ActiveRecord
         return [
             [['data_hora_inicio', 'data_hora_fim', 'data_hora_inicio_execucao'], 'safe'],
             [['aberta'],'boolean'],
+            [['status_execucao'],'integer'],
             [['nome','aberta', 'data_hora_inicio', 'data_hora_fim'],'required'],
             [['nome'], 'string', 'max' => 45]
         ];
