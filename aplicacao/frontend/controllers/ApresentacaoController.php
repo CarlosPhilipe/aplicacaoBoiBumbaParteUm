@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Apresentacao;
 use frontend\models\ParteSearch;
+use frontend\models\ElementoSearch;
 use frontend\models\TipoSearch;
 use frontend\models\ApresentacaoSearch;
 use frontend\models\Historico;
@@ -151,6 +152,18 @@ class ApresentacaoController extends Controller
 
     }
 
+public function actionExecutar_elemento($id, $elemento)
+    {
+       // echo $elemento."<br>";
+        $elementoDAO = new ElementoSearch();
+        $elementoDAO->executaElemento($elemento);
+
+        return $this->actionExecutar_apresentacao($id);
+
+    }
+
+
+
     public function actionParar_apresentacao($id)
     {
         $model = $this->findModel($id);
@@ -174,6 +187,9 @@ class ApresentacaoController extends Controller
         ]);
 
     }
+
+
+
 
     /**
      * Displays a single Apresentacao model.
