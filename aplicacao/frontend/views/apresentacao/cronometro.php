@@ -6,6 +6,7 @@ use yii\grid\PersonalActionColumn;
 use frontend\models\ApresentacaoSearch;
 use frontend\models\ElementoSearch;
 use frontend\models\Elemento;
+use frontend\models\HistoricoSearch;
 
 
 $this->title = 'Cronômetro da Apresentação '.$nome;
@@ -71,8 +72,8 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
               <?php
                   $elemento = new ElementoSearch();
                   $elementos = $elemento->getAllElementosParte($parte['idparte']);
-
               ?>
+
               <?php foreach ($elementos as $elemento):?>
                   <tbody>
                       <tr class='text-center'>
@@ -84,7 +85,6 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
                           			echo intval(intval($elemento['tempo'])%60) ?></td>
                           <td>
                               <?= Html::a('Contabilizar', ['cronometro', 'id' => $id], ['class' => 'btn btn-primary']) ?>
-                              <?= Html::a('cancelar', ['cronometro', 'id' => $id], ['class' => 'btn btn-warning']) ?>
                           </td>
                       </tr>
                   </tbody>
@@ -94,28 +94,52 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
     <br><br>
     <h3>Histórico Realizado</h3>
+
     <table class="table table-bordered table-striped table-responsive">
     	<thead>
             <tr>
                 <th>Elemento</th>
-                <th class='text-center'>Tempo consumido</th>
+                <th>Tempo consumido</th>
+                <th>Diferença</th>
             </tr>
         </thead>
 
-        <tbody>
-            <tr class='text-center'>
-                <td>Cantoria</td>
-                <td>13:10</td>
-            </tr>
-            <tr class='text-center'>
-                <td>canto novo</td>
-                <td>3:35</td>
-            </tr>
-            <tr class='text-center'>
-                <td align="right"><strong>TOTAL</strong></td>
-                <td><strong>16:45</strong></td>
-            </tr>
-        </tbody>
+        <?php
+        $historico = new HistoricoSearch();
+        $historicos = $historico->getAllHistorico($id);
+        ?>
+
+        <?php foreach ($historicos as $historico):?>
+            <tbody>
+                <tr class='text-center'>
+                  <?php $elemento = Elemento::findOne(['idelemento' => $historico['elemento']]);  ?>
+                    <td><?=$elemento['nome']?></td>
+                    <td>
+                        <?php echo intval(intval($historico['tempo_consumido'])/60).':';
+                                if(intval(intval($historico['tempo_consumido'])%60)<10){
+                                  echo 0;
+                                }
+                                echo intval(intval($historico['tempo_consumido'])%60)
+                        ?>
+                    </td>
+                    <td>
+                        <?php   $diferenca = intval($historico['tempo_consumido'])-intval($elemento['tempo']);
+                                if ($diferenca<0) {
+                                  echo '-';
+                                  $diferenca=$diferenca*(-1);
+                                } elseif ($diferenca>0) {
+                                  echo '+';
+                                }
+                                echo intval(intval($diferenca)/60).':';
+                                if(intval(intval($diferenca)%60)<10){
+                                  echo 0;
+                                }
+                                echo intval(intval($diferenca)%60)
+                        ?>
+                    </td>
+                </tr>
+            </tbody>
+        <?php endforeach?>
     </table>
 
 </div>

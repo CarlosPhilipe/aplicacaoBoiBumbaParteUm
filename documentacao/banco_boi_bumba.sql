@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: May 02, 2016 at 10:13 PM
--- Server version: 5.5.42
--- PHP Version: 7.0.0
+-- Host: 127.0.0.1
+-- Generation Time: 04-Maio-2016 às 02:08
+-- Versão do servidor: 10.1.10-MariaDB
+-- PHP Version: 7.0.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `event_cow`
@@ -17,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `apresentacao`
+-- Estrutura da tabela `apresentacao`
 --
 
 CREATE TABLE `apresentacao` (
@@ -27,22 +33,22 @@ CREATE TABLE `apresentacao` (
   `data_hora_fim` datetime DEFAULT NULL,
   `aberta` binary(1) DEFAULT NULL,
   `data_hora_inicio_execucao` datetime DEFAULT NULL,
-  `status_execucao` int(1) NOT NULL DEFAULT '0'
+  `status_execucao` int(1) NOT NULL DEFAULT '0',
+  `data_hora_termino_execucao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `apresentacao`
+-- Extraindo dados da tabela `apresentacao`
 --
 
-INSERT INTO `apresentacao` (`idapresentacao`, `nome`, `data_hora_inicio`, `data_hora_fim`, `aberta`, `data_hora_inicio_execucao`) VALUES
-(1, 'Boi Bumbá em Parintins', '2016-06-24 20:00:00', '2016-06-24 22:10:00', 0x31, '2016-05-01 15:50:00'),
-(2, 'Segunda noite', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, NULL),
-(3, 'Terceira Noite', '2016-06-24 20:15:00', '2016-06-24 22:00:00', 0x31, NULL);
+INSERT INTO `apresentacao` (`idapresentacao`, `nome`, `data_hora_inicio`, `data_hora_fim`, `aberta`, `data_hora_inicio_execucao`, `status_execucao`, `data_hora_termino_execucao`) VALUES
+(1, 'Boi Bumbá em Parintins - Primeira noite', '2016-06-24 20:00:00', '2016-06-24 22:10:00', 0x31, '2016-05-04 01:04:15', 1, NULL),
+(2, 'Boi Bumbá em Parintins - Segunda noite', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, '2016-05-03 22:58:46', 1, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `elemento`
+-- Estrutura da tabela `elemento`
 --
 
 CREATE TABLE `elemento` (
@@ -56,10 +62,10 @@ CREATE TABLE `elemento` (
   `data_hora_fim` datetime DEFAULT NULL,
   `parte_idparte` int(11) NOT NULL,
   `tipo_idtipo` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `elemento`
+-- Extraindo dados da tabela `elemento`
 --
 
 INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `status`, `posicao`, `data_hora_inicio`, `data_hora_fim`, `parte_idparte`, `tipo_idtipo`) VALUES
@@ -74,7 +80,30 @@ INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `status`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migration`
+-- Estrutura da tabela `historico`
+--
+
+CREATE TABLE `historico` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `apresentacao` int(10) UNSIGNED NOT NULL,
+  `parte` int(10) UNSIGNED NOT NULL,
+  `elemento` int(10) UNSIGNED NOT NULL,
+  `tempo_consumido` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `historico`
+--
+
+INSERT INTO `historico` (`id`, `apresentacao`, `parte`, `elemento`, `tempo_consumido`) VALUES
+(1, 1, 1, 2, 220),
+(2, 1, 1, 3, 220),
+(3, 1, 2, 4, 330);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `migration`
 --
 
 CREATE TABLE `migration` (
@@ -83,7 +112,7 @@ CREATE TABLE `migration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `migration`
+-- Extraindo dados da tabela `migration`
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
@@ -92,17 +121,17 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `parte`
+-- Estrutura da tabela `parte`
 --
 
 CREATE TABLE `parte` (
   `idparte` int(11) NOT NULL,
   `nome` varchar(45) DEFAULT NULL,
   `apresentacao_idapresentacao` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `parte`
+-- Extraindo dados da tabela `parte`
 --
 
 INSERT INTO `parte` (`idparte`, `nome`, `apresentacao_idapresentacao`) VALUES
@@ -110,22 +139,21 @@ INSERT INTO `parte` (`idparte`, `nome`, `apresentacao_idapresentacao`) VALUES
 (2, 'Parte 2', 1),
 (3, 'Parte 3', 1),
 (4, 'Parte 1', 2),
-(5, 'Parte 2', 2),
-(6, 'Parte 1', 3);
+(5, 'Parte 2', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo`
+-- Estrutura da tabela `tipo`
 --
 
 CREATE TABLE `tipo` (
   `idtipo` int(11) NOT NULL,
   `nome` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tipo`
+-- Extraindo dados da tabela `tipo`
 --
 
 INSERT INTO `tipo` (`idtipo`, `nome`) VALUES
@@ -135,7 +163,7 @@ INSERT INTO `tipo` (`idtipo`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Estrutura da tabela `user`
 --
 
 CREATE TABLE `user` (
@@ -158,10 +186,10 @@ CREATE TABLE `user` (
   `grupoacesso` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cpf` varchar(14) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tipo` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user`
+-- Extraindo dados da tabela `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `nome`, `sexo`, `auth_key`, `password_hash`, `password_reset_token`, `role`, `status`, `created_at`, `updated_at`, `endereco`, `complemento`, `instituicao`, `data_nasc`, `email`, `grupoacesso`, `cpf`, `tipo`) VALUES
@@ -185,6 +213,12 @@ ALTER TABLE `elemento`
   ADD PRIMARY KEY (`idelemento`),
   ADD KEY `fk_elemento_tipo_idx` (`tipo_idtipo`),
   ADD KEY `fk_elemento_parte1_idx` (`parte_idparte`);
+
+--
+-- Indexes for table `historico`
+--
+ALTER TABLE `historico`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migration`
@@ -220,40 +254,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `apresentacao`
 --
 ALTER TABLE `apresentacao`
-  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `elemento`
 --
 ALTER TABLE `elemento`
-  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `historico`
+--
+ALTER TABLE `historico`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `parte`
 --
 ALTER TABLE `parte`
-  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `idtipo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idtipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `elemento`
+-- Limitadores para a tabela `elemento`
 --
 ALTER TABLE `elemento`
   ADD CONSTRAINT `fk_elemento_parte1` FOREIGN KEY (`parte_idparte`) REFERENCES `parte` (`idparte`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_elemento_tipo` FOREIGN KEY (`tipo_idtipo`) REFERENCES `tipo` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `parte`
+-- Limitadores para a tabela `parte`
 --
 ALTER TABLE `parte`
   ADD CONSTRAINT `fk_parte_apresentacao1` FOREIGN KEY (`apresentacao_idapresentacao`) REFERENCES `apresentacao` (`idapresentacao`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

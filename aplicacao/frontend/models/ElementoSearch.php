@@ -116,4 +116,17 @@ class ElementoSearch extends Elemento
          //  var_dump($elementos); 
         return $elementos;
     }
+
+    public function getElementosById($id)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('nome', 'tempo')
+        ->from('elemento')
+        ->where("idelemento = ".$id);
+
+        $elemento = $query->one();
+
+        return $elemento;
+    }    
 }
