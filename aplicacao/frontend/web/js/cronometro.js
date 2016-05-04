@@ -108,9 +108,8 @@ function cronometroGeral(aux){
 		segundoParcial+=1;
 	}
 }
+window.document.onload = cronometroGeral(1);
 
 function stop(){
-	
-
 	location.reload();
 }
