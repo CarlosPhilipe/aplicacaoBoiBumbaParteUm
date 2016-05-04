@@ -7,6 +7,7 @@ use frontend\models\Apresentacao;
 use frontend\models\ParteSearch;
 use frontend\models\TipoSearch;
 use frontend\models\ApresentacaoSearch;
+use frontend\models\Historico;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
