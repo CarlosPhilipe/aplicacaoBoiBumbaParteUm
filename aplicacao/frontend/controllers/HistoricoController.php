@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
+use frontend\models\Apresentacao;
+use frontend\models\ApresentacaoSearch;
 use frontend\models\Historico;
 use frontend\models\HistoricoSearch;
 use yii\web\Controller;
@@ -117,5 +119,32 @@ class HistoricoController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionInserir($apresentacao, $parte, $elemento)
+    {
+        $agora = date("Y-m-d H:i:s");
+
+        $model = Apresentacao::findOne($apresentacao);
+        $data_hora_inicio_execucao = $model->data_hora_inicio_execucao;
+
+        $query = new \yii\db\Query();
+        $query = $query->select('sum(tempo_consumido) as tempo')
+        ->from('historico')
+        ->where("apresentacao = ".$apresentacao);
+        $tempo = $query->one();
+
+        $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - $tempo['tempo'];
+
+        $query = new \yii\db\Query();
+        $query = $query->createCommand()->insert('historico', [
+        'apresentacao' => $apresentacao,
+        'parte' => $parte,
+        'elemento' => $elemento,
+        'tempo_consumido' => $tempo_consumido,
+        'data_hora_termino_execucao' => $agora,
+        ]);
+        $query->execute();
+
     }
 }

@@ -108,6 +108,8 @@ function cronometro(aux){
 
 function iniciar(id){
 	$.get('index.php?r=apresentacao%2Fexecutar_apresentacao&id='+id);
+	$('#parar').removeClass('hide');
+	$('#iniciar').addClass('hide');
 	cronometro(1);
 	
 }
@@ -121,6 +123,6 @@ function parar(id){
 function contabilizar(apresentacao, parte, elemento){
 	$('#contabilizar'+elemento).removeClass('btn-primary');
 	$('#contabilizar'+elemento).addClass('btn-default');
-	$.get('index.php?r=historico%2Finserir&apresentacao='+id+'&parte='+parte+'&elemento='+elemento);
+	$.get('index.php?r=historico%2Finserir&apresentacao='+apresentacao+'&parte='+parte+'&elemento='+elemento);
 	
 }

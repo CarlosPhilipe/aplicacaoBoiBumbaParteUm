@@ -31,7 +31,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
     <div class="container text-center">        
         <button id="iniciar" onclick="iniciar(<?=$id?>)" type="button" class="btn btn-lg btn-success">Iniciar</button>
-        <button id="parar" onclick="parar(<?=$id?>)" type="button" class="btn btn-lg btn-success">Parar</button>
+        <button id="parar" onclick="parar(<?=$id?>)" type="button" class="btn hide btn-lg btn-success">Parar</button>
     </div>
 
     <br>
