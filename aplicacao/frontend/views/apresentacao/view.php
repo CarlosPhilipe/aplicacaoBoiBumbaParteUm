@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
   <br>
   <h3>Roteiro</h3>
 
-  <p><?= Html::a('Executar', ['executar_apresentacao', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?></p>
+  <p><?= Html::a('Executar', ['parar_apresentacao', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?></p>
 	
 	<table class="table table-bordered table-striped table-responsive">
           <?php foreach ($partes as $parte):?>

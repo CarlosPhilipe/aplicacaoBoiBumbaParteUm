@@ -10,7 +10,7 @@ var minutoParcial = new Number();
 var segundoParcial = new Number();
 var timeParcial 	= new Number();
 
-function cronometroGeral(aux){
+function cronometro(aux){
 	if(aux == 1){
 		hora = parseInt(($('#horas').val() === '' ? 0 : $('#horas').val()));
 		minuto = parseInt(($('#minutos').val() === '' ? 0 : $('#minutos').val()));
@@ -24,9 +24,6 @@ function cronometroGeral(aux){
 	}
 
 	if (aux==1 || aux==2) {
-		$('#btn').addClass('hide');
-		$('#tempo').removeClass('hide');
-		$('#parcial').removeClass('hide');
 		
 		if(segundo>59){
 			segundo=0;
@@ -101,15 +98,22 @@ function cronometroGeral(aux){
 
 		tempo.innerText="Total: "+time;
 		parcial.innerText="Parcial: "+timeParcial;
-		setTimeout('cronometroGeral(2);',1000);
+		setTimeout('cronometro(2);',1000);
 		
 		
 		segundo+=1;	
 		segundoParcial+=1;
 	}
 }
-window.document.onload = cronometroGeral(1);
 
-function stop(){
-	location.reload();
+function iniciar(id){
+	$.get('index.php?r=apresentacao%2Fexecutar_apresentacao&id='+id);
+	cronometro(1);
+	
+}
+
+function parar(id){
+	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
+	window.location.replace('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
+	
 }

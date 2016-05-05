@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -8,10 +8,11 @@ use Yii;
  * This is the model class for table "historico".
  *
  * @property string $id
- * @property string $apresentacao
- * @property string $parte
- * @property string $elemento
- * @property string $tempo_consumido
+ * @property integer $apresentacao
+ * @property integer $parte
+ * @property integer $elemento
+ * @property integer $tempo_consumido
+ * @property string $data_hora_termino_execucao
  */
 class Historico extends \yii\db\ActiveRecord
 {
@@ -29,8 +30,8 @@ class Historico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'required'],
-            [['apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'integer']
+            [['apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'integer'],
+            [['data_hora_termino_execucao'], 'safe']
         ];
     }
 
@@ -45,6 +46,7 @@ class Historico extends \yii\db\ActiveRecord
             'parte' => 'Parte',
             'elemento' => 'Elemento',
             'tempo_consumido' => 'Tempo Consumido',
+            'data_hora_termino_execucao' => 'Data Hora Termino Execucao',
         ];
     }
 }

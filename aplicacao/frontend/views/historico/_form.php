@@ -12,13 +12,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'apresentacao')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'apresentacao')->textInput() ?>
 
-    <?= $form->field($model, 'parte')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'parte')->textInput() ?>
 
-    <?= $form->field($model, 'elemento')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'elemento')->textInput() ?>
 
-    <?= $form->field($model, 'tempo_consumido')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tempo_consumido')->textInput() ?>
+
+    <?= $form->field($model, 'data_hora_termino_execucao')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

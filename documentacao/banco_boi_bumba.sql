@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Maio-2016 às 02:08
+-- Generation Time: 05-Maio-2016 às 20:43
 -- Versão do servidor: 10.1.10-MariaDB
 -- PHP Version: 7.0.4
 
@@ -42,8 +42,8 @@ CREATE TABLE `apresentacao` (
 --
 
 INSERT INTO `apresentacao` (`idapresentacao`, `nome`, `data_hora_inicio`, `data_hora_fim`, `aberta`, `data_hora_inicio_execucao`, `status_execucao`, `data_hora_termino_execucao`) VALUES
-(1, 'Boi Bumbá em Parintins - Primeira noite', '2016-06-24 20:00:00', '2016-06-24 22:10:00', 0x31, '2016-05-04 01:04:15', 1, NULL),
-(2, 'Boi Bumbá em Parintins - Segunda noite', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, '2016-05-03 22:58:46', 1, NULL);
+(1, 'Boi Bumbá em Parintins - Primeira noite', '2016-06-24 20:00:00', '2016-06-24 22:10:00', 0x31, NULL, 0, NULL),
+(2, 'Boi Bumbá em Parintins - Segunda noite', '2016-06-24 20:00:00', '2016-06-24 22:30:00', 0x30, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -69,13 +69,13 @@ CREATE TABLE `elemento` (
 --
 
 INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `status`, `posicao`, `data_hora_inicio`, `data_hora_fim`, `parte_idparte`, `tipo_idtipo`) VALUES
-(2, 'Cantoria', 720, 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos,', 'a', '2', NULL, NULL, 1, 1),
-(3, 'Trilha', 82, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', '1', NULL, NULL, 1, 1),
-(4, 'Canto Covo', 200, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 2, 1),
-(5, 'Anhanguera', 300, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 3, 1),
-(6, 'Canto Inicial', 300, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 1),
-(8, 'Vida Terra', 480, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 1),
-(9, 'Abre Boca', 280, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 2);
+(1, 'Cantoria', 720, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', '2', NULL, NULL, 1, 1),
+(2, 'Trilha', 82, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', '1', NULL, NULL, 1, 1),
+(3, 'Canto Covo', 200, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 2, 1),
+(4, 'Anhanguera', 300, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 3, 1),
+(5, 'Canto Inicial', 300, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 1),
+(6, 'Vida Terra', 480, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 1),
+(7, 'Abre Boca', 280, 'Lorem Ipsum é simplesmente uma simulação de texto ', 'a', NULL, NULL, NULL, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -85,20 +85,12 @@ INSERT INTO `elemento` (`idelemento`, `nome`, `tempo`, `descricao`, `status`, `p
 
 CREATE TABLE `historico` (
   `id` int(10) UNSIGNED NOT NULL,
-  `apresentacao` int(10) UNSIGNED NOT NULL,
-  `parte` int(10) UNSIGNED NOT NULL,
-  `elemento` int(10) UNSIGNED NOT NULL,
-  `tempo_consumido` int(10) UNSIGNED NOT NULL
+  `apresentacao` int(11) DEFAULT NULL,
+  `parte` int(11) DEFAULT NULL,
+  `elemento` int(11) DEFAULT NULL,
+  `tempo_consumido` int(11) DEFAULT NULL,
+  `data_hora_inicio` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `historico`
---
-
-INSERT INTO `historico` (`id`, `apresentacao`, `parte`, `elemento`, `tempo_consumido`) VALUES
-(1, 1, 1, 2, 220),
-(2, 1, 1, 3, 220),
-(3, 1, 2, 4, 330);
 
 -- --------------------------------------------------------
 
@@ -193,8 +185,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `nome`, `sexo`, `auth_key`, `password_hash`, `password_reset_token`, `role`, `status`, `created_at`, `updated_at`, `endereco`, `complemento`, `instituicao`, `data_nasc`, `email`, `grupoacesso`, `cpf`, `tipo`) VALUES
-(16, '201032', 'carlos philipe mendes bahia', '0', 'xg6I_LrtWiIHyQmS3_mSzIMFy_-BG9-5', '$2y$13$oJNvsY/slghrD6uTp/qO8uQJ0ohELFSCFc7sOErXt4sALE2qUo3dK', '', '10', '10', '1452973046', '1452973046', '', '', '', NULL, 'carlosphbahia@gmail.com', 'gestor', '', NULL),
-(17, 'user', '', '', 'WiOo97NfQ0aoL35hfx8bysFdXxOjF72B', '$2y$13$UHgERuin0Ku5Cs4HYzo1T.EYxG0BigfXjntjc7P2jH8F/Fe9LClea', '', '10', '10', '1461350111', '1461350111', '', '', '', NULL, 'user@yii.com.hue.br', 'gestor', '', NULL);
+(1, '201032', 'carlos philipe mendes bahia', '0', 'xg6I_LrtWiIHyQmS3_mSzIMFy_-BG9-5', '$2y$13$oJNvsY/slghrD6uTp/qO8uQJ0ohELFSCFc7sOErXt4sALE2qUo3dK', '', '10', '10', '1452973046', '1452973046', '', '', '', NULL, 'carlosphbahia@gmail.com', 'gestor', '', NULL),
+(2, 'user', '', '', 'WiOo97NfQ0aoL35hfx8bysFdXxOjF72B', '$2y$13$UHgERuin0Ku5Cs4HYzo1T.EYxG0BigfXjntjc7P2jH8F/Fe9LClea', '', '10', '10', '1461350111', '1461350111', '', '', '', NULL, 'user@yii.com.hue.br', 'gestor', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -254,22 +246,22 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `apresentacao`
 --
 ALTER TABLE `apresentacao`
-  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idapresentacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `elemento`
 --
 ALTER TABLE `elemento`
-  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idelemento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `historico`
 --
 ALTER TABLE `historico`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `parte`
 --
 ALTER TABLE `parte`
-  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idparte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tipo`
 --
@@ -279,7 +271,7 @@ ALTER TABLE `tipo`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

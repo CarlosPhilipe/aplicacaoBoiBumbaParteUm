@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Historico;
+use frontend\models\Historico;
 
 /**
  * HistoricoSearch represents the model behind the search form about `app\models\Historico`.
@@ -19,6 +19,7 @@ class HistoricoSearch extends Historico
     {
         return [
             [['id', 'apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'integer'],
+            [['data_hora_termino_execucao'], 'safe'],
         ];
     }
 
@@ -60,24 +61,9 @@ class HistoricoSearch extends Historico
             'parte' => $this->parte,
             'elemento' => $this->elemento,
             'tempo_consumido' => $this->tempo_consumido,
+            'data_hora_termino_execucao' => $this->data_hora_termino_execucao,
         ]);
 
         return $dataProvider;
-    }
-
-    public function getAllHistorico($id)
-    {
-         $query = new \yii\db\Query();
-
-        $query = $query->select('id, elemento, tempo_consumido')
-        ->from('historico')
-        ->where("apresentacao = ".$id)
-        ->orderBy(['id' => SORT_ASC]);
-
-        $historico = $query->all();
-
-         // echo "<br><br><br><br><br><br>";
-         //  var_dump($elementos); 
-        return $historico;
     }
 }

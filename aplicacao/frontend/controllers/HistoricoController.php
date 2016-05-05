@@ -3,8 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Historico;
-use app\models\HistoricoSearch;
+use frontend\models\Historico;
+use frontend\models\HistoricoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

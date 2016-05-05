@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'parte',
             'elemento',
             'tempo_consumido',
+            'data_hora_termino_execucao',
         ],
     ]) ?>
 
