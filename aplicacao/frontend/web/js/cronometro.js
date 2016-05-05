@@ -116,7 +116,7 @@ function iniciar(id){
 
 function parar(id){
 	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
-	window.location.replace('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
+	window.location.replace('index.php?r=historico');
 	
 }
 
