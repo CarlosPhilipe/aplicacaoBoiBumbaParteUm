@@ -124,5 +124,7 @@ function contabilizar(apresentacao, parte, elemento){
 	$('#contabilizar'+elemento).removeClass('btn-primary');
 	$('#contabilizar'+elemento).addClass('btn-default');
 	$.get('index.php?r=historico%2Finserir&apresentacao='+apresentacao+'&parte='+parte+'&elemento='+elemento);
+
+	$("#tabelahistorico").append("<tr><td>1</td><td>2</td><td>3</td></tr>");
 	
 }

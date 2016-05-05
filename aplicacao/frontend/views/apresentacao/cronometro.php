@@ -91,6 +91,14 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
                 <th>Diferença</th>
             </tr>
         </thead>
+
+        <tbody id="tabelahistorico">                
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+        </tbody>
+
+
     </table>
 
 </div>
