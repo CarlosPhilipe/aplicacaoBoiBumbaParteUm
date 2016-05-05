@@ -72,7 +72,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
                           			}
                           			echo intval(intval($elemento['tempo'])%60) ?></td>
                           <td>
-                              <?= Html::a('Contabilizar', ['executar_elemento', 'id' => $id, 'elemento' => $elemento['idelemento']], ['class' => 'btn btn-primary']) ?>
+                              <button id=<?='"contabilizar'.$elemento['idelemento'].'"' ?> onclick="contabilizar(<?php echo $id.','.$parte['idparte'].','.$elemento['idelemento']?>)" type="button" class="btn btn-primary">Contabilizar</button>
                           </td>
                       </tr>
                   </tbody>

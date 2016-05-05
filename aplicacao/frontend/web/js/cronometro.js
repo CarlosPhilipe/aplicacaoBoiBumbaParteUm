@@ -117,3 +117,10 @@ function parar(id){
 	window.location.replace('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
 	
 }
+
+function contabilizar(apresentacao, parte, elemento){
+	$('#contabilizar'+elemento).removeClass('btn-primary');
+	$('#contabilizar'+elemento).addClass('btn-default');
+	$.get('index.php?r=historico%2Finserir&apresentacao='+id+'&parte='+parte+'&elemento='+elemento);
+	
+}
