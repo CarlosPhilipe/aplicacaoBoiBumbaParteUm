@@ -183,15 +183,6 @@ return array (
       '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
     ),
   ),
-  'kartik-v/yii2-widget-datepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-datepicker',
-    'version' => '1.3.3.0',
-    'alias' => 
-    array (
-      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
-    ),
-  ),
   'kartik-v/yii2-widget-colorinput' => 
   array (
     'name' => 'kartik-v/yii2-widget-colorinput',
@@ -246,15 +237,6 @@ return array (
       '@dosamigos/datepicker' => $vendorDir . '/2amigos/yii2-date-picker-widget/src',
     ),
   ),
-  'kartik-v/yii2-datecontrol' => 
-  array (
-    'name' => 'kartik-v/yii2-datecontrol',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/datecontrol' => $vendorDir . '/kartik-v/yii2-datecontrol',
-    ),
-  ),
   'kartik-v/yii2-helpers' => 
   array (
     'name' => 'kartik-v/yii2-helpers',
@@ -264,22 +246,22 @@ return array (
       '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers',
     ),
   ),
-  'kartik-v/yii2-detail-view' => 
+  'yiisoft/yii2-jui' => 
   array (
-    'name' => 'kartik-v/yii2-detail-view',
-    'version' => '9999999-dev',
+    'name' => 'yiisoft/yii2-jui',
+    'version' => '2.0.5.0',
     'alias' => 
     array (
-      '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view',
+      '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  'kartik-v/yii2-mpdf' => 
+  'kartik-v/yii2-widget-datepicker' => 
   array (
-    'name' => 'kartik-v/yii2-mpdf',
+    'name' => 'kartik-v/yii2-widget-datepicker',
     'version' => '9999999-dev',
     'alias' => 
     array (
-      '@kartik/mpdf' => $vendorDir . '/kartik-v/yii2-mpdf',
+      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
     ),
   ),
 );
