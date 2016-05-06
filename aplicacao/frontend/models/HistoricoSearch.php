@@ -18,7 +18,7 @@ class HistoricoSearch extends Historico
     public function rules()
     {
         return [
-            [['id', 'apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'integer'],
+            [['id', 'apresentacao', 'parte', 'elemento', 'tempo_consumido', 'diferenca'], 'integer'],
             [['data_hora_termino_execucao'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class HistoricoSearch extends Historico
             'parte' => $this->parte,
             'elemento' => $this->elemento,
             'tempo_consumido' => $this->tempo_consumido,
+            'diferenca' => $this->diferenca,
             'data_hora_termino_execucao' => $this->data_hora_termino_execucao,
         ]);
 

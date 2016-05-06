@@ -30,7 +30,7 @@ class Historico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['apresentacao', 'parte', 'elemento', 'tempo_consumido'], 'integer'],
+            [['apresentacao', 'parte', 'elemento', 'tempo_consumido', 'diferenca'], 'integer'],
             [['data_hora_termino_execucao'], 'safe']
         ];
     }
@@ -46,6 +46,7 @@ class Historico extends \yii\db\ActiveRecord
             'parte' => 'Parte',
             'elemento' => 'Elemento',
             'tempo_consumido' => 'Tempo Consumido',
+            'diferenca' => 'Diferença',
             'data_hora_termino_execucao' => 'Data Hora Termino Execucao',
         ];
     }

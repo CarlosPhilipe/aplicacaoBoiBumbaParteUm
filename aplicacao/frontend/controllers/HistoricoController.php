@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Apresentacao;
 use frontend\models\ApresentacaoSearch;
+use frontend\models\Elemento;
+use frontend\models\ElementoSearch;
 use frontend\models\Historico;
 use frontend\models\HistoricoSearch;
 use yii\web\Controller;
@@ -136,6 +138,11 @@ class HistoricoController extends Controller
 
         $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - $tempo['tempo'];
 
+        $model = Elemento::findOne($elemento);
+        $tempo = $model->tempo;
+
+        $diferenca = $tempo_consumido - $tempo;
+
         $query = new \yii\db\Query();
         $query = $query->createCommand()->insert('historico', [
         'apresentacao' => $apresentacao,
@@ -143,8 +150,46 @@ class HistoricoController extends Controller
         'elemento' => $elemento,
         'tempo_consumido' => $tempo_consumido,
         'data_hora_termino_execucao' => $agora,
+        'diferenca' => $diferenca,
         ]);
         $query->execute();
+
+        $horas = intval($tempo_consumido / 3600);
+        if ($horas<10) {
+            $horas = "0".$horas;
+        }
+        $minutos = intval(($tempo_consumido % 3600) / 60);
+        if ($minutos<10) {
+            $minutos = "0".$minutos;
+        }
+        $segundos = intval(($tempo_consumido % 3600) % 60);
+        if ($segundos<10) {
+            $segundos = "0".$segundos;
+        }
+        $tempo_consumido = $horas.":".$minutos.":".$segundos;
+
+        $horas = intval($diferenca / 3600);
+        if ($horas<10) {
+            $horas = "0".$horas;
+        }
+        if($diferenca>0){
+            $horas = "+".$horas;
+        }
+        if ($diferenca<0) {
+            $diferenca = $diferenca*(-1);
+            $horas = "-".$horas;
+        }
+        $minutos = intval(($diferenca % 3600) / 60);
+        if ($minutos<10) {
+            $minutos = "0".$minutos;
+        }
+        $segundos = intval(($diferenca % 3600) % 60);
+        if ($segundos<10) {
+            $segundos = "0".$segundos;
+        }
+        $diferenca = $horas.":".$minutos.":".$segundos;
+
+        return "<tr><td>".$model->nome."</td><td>".$tempo_consumido."</td><td>".$diferenca."</td></tr>";
 
     }
 }
