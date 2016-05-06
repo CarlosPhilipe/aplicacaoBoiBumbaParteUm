@@ -125,7 +125,4 @@ function contabilizar(apresentacao, parte, elemento){
 	$.get('index.php?r=historico%2Finserir&apresentacao='+apresentacao+'&parte='+parte+'&elemento='+elemento, function(data){
             $("#tabelahistorico").append(data);
         });
-
-	
-	
 }
