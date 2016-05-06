@@ -136,7 +136,7 @@ class HistoricoController extends Controller
         ->where("apresentacao = ".$apresentacao);
         $tempo = $query->one();
 
-        $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - $tempo['tempo'];
+        $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - intval($tempo['tempo']);
 
         $model = Elemento::findOne($elemento);
         $tempo = $model->tempo;
@@ -151,6 +151,7 @@ class HistoricoController extends Controller
         'tempo_consumido' => $tempo_consumido,
         'data_hora_termino_execucao' => $agora,
         'diferenca' => $diferenca,
+        'user' => Yii::$app->user->identity->id,
         ]);
         $query->execute();
 

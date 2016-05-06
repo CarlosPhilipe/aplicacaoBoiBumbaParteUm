@@ -95,14 +95,13 @@ function cronometro(aux){
 			timeParcial=""+horaParcial+timeParcial;
 		}
 
+		segundo+=1;	
+		segundoParcial+=1;
+
 
 		tempo.innerText="Total: "+time;
 		parcial.innerText="Parcial: "+timeParcial;
 		setTimeout('cronometro(2);',1000);
-		
-		
-		segundo+=1;	
-		segundoParcial+=1;
 	}
 }
 
@@ -116,7 +115,7 @@ function iniciar(id){
 
 function parar(id){
 	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
-	window.location.replace('index.php?r=historico');
+	window.location.replace('index.php?r=apresentacao');
 	
 }
 

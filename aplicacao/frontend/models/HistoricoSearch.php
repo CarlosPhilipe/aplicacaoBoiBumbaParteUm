@@ -18,7 +18,7 @@ class HistoricoSearch extends Historico
     public function rules()
     {
         return [
-            [['id', 'apresentacao', 'parte', 'elemento', 'tempo_consumido', 'diferenca'], 'integer'],
+            [['id', 'apresentacao', 'parte', 'elemento', 'tempo_consumido', 'diferenca', 'user'], 'integer'],
             [['data_hora_termino_execucao'], 'safe'],
         ];
     }
@@ -57,6 +57,7 @@ class HistoricoSearch extends Historico
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'user' => $this->user,
             'apresentacao' => $this->apresentacao,
             'parte' => $this->parte,
             'elemento' => $this->elemento,
