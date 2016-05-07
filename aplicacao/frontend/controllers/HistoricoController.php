@@ -155,6 +155,10 @@ class HistoricoController extends Controller
         ]);
         $query->execute();
 
+        $query = new \yii\db\Query();
+        $query = $query->createCommand()->update('elemento', ['status' => 'c'], 'idelemento = '.$elemento);
+        $query->execute();
+
         $horas = intval($tempo_consumido / 3600);
         if ($horas<10) {
             $horas = "0".$horas;
