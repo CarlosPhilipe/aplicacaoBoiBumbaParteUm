@@ -173,6 +173,10 @@ class ApresentacaoSearch extends Apresentacao
             }   
         }
 
+        $duracao = strtotime($apresentacao->data_hora_fim) - strtotime($apresentacao->data_hora_inicio);
+        $decorrido = strtotime(date("Y-m-d H:i:s")) - strtotime($apresentacao->data_hora_inicio_execucao);
+        $tempoRestante = $duracao - $decorrido;
+
         $tempoCadastradoExecutado = $this->formataHHMMSS($tempoCadastradoExecutado);
         $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
         $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);

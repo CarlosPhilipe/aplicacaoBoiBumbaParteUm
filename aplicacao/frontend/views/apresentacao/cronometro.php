@@ -39,7 +39,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
     <table class="table table-bordered table-striped table-responsive">
          <thead>
            <tr>
-             <th>Tempo dos Elementos Realizado</th>
+             <th>Tempo dos Elementos Realizados</th>
              <th>Tempo dos Elementos Restantes</th>
              <th>Tempo dos Elementos Contabilizados</th>
              <th>Tempo Restante</th>
