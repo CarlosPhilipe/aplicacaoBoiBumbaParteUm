@@ -175,6 +175,12 @@ public function actionExecutar_elemento($id, $elemento)
             Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_termino_execucao' => date("Y-m-d H:i:s"), 'status_execucao' => 0], 'idapresentacao = '.$id)->execute();
         }
 
+        $elementosApresentacao = new ApresentacaoSearch();
+        $elementosApresentacao = $elementosApresentacao->getAllElementosApresentacao($id);
+        foreach ($elementosApresentacao as $elemento) {
+            Yii::$app->db->createCommand()->update('elemento', ['status' => 'a'], 'idelemento = '.$elemento['idelemento'])->execute();
+        }
+
         return $this->render('cronometro', [
             'id' => $model->idapresentacao,
             'nome' => $model->nome,
@@ -302,6 +308,14 @@ public function actionExecutar_elemento($id, $elemento)
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+     public function actionPrevisao($id)
+    {
+        $searchModel = new ApresentacaoSearch();
+        $previsao = $searchModel->getPrevisaoExecutados($id);
+
+        return $previsao;
     }
 
     /**

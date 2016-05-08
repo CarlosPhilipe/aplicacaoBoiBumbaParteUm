@@ -143,4 +143,36 @@ class ApresentacaoSearch extends Apresentacao
          //  var_dump($partes['tempo']); 
         return $elementos;
     }
+
+    public function getPrevisaoExecutados($idapresentacao)
+    {
+        $tempoCadastradoExecutado = 0;
+        $tempoCadastradoNaoExecutado = 0;
+        $tempoContabilizado = 0;
+        $tempoRestante = 0;
+        
+
+        $elementosCadastrados = $this->getAllElementosApresentacao($idapresentacao);
+
+        foreach ($elementosCadastrados as $elemento) {
+            if ($elemento['status']=='c') {
+                $tempoCadastradoExecutado += intval($elemento['tempo']);
+            }
+            if ($elemento['status']=='a') {
+                $tempoCadastradoNaoExecutado += intval($elemento['tempo']);
+            }
+
+            $elementosHistorico = Historico::find()
+                ->where(['apresentacao' => $idapresentacao, 'parte' => $elemento['parte_idparte'], 'elemento' => $elemento['idelemento']])
+                ->all();
+            foreach ($elementosHistorico as $elementoHistorico) {
+                $tempoContabilizado += intval($elementoHistorico['tempo_consumido']);
+            }
+            
+        }
+
+        $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoRestante."</td>";
+
+        return $tabelalinhas;
+    }
 }

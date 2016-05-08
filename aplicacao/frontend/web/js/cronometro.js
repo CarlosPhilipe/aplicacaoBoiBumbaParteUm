@@ -10,7 +10,7 @@ var minutoParcial = new Number();
 var segundoParcial = new Number();
 var timeParcial 	= new Number();
 
-function cronometro(aux){
+function cronometro(aux,id){
 	if(aux == 1){
 		hora = parseInt(($('#horas').val() === '' ? 0 : $('#horas').val()));
 		minuto = parseInt(($('#minutos').val() === '' ? 0 : $('#minutos').val()));
@@ -99,9 +99,12 @@ function cronometro(aux){
 		segundoParcial+=1;
 
 
-		tempo.innerText="Total: "+time;
-		parcial.innerText="Parcial: "+timeParcial;
-		setTimeout('cronometro(2);',1000);
+		tempo.innerText=time;
+		parcial.innerText=timeParcial;
+		$.get('index.php?r=apresentacao%2Fprevisao&id='+id, function(data){
+				$("#previsao").html(data);
+		});
+		setTimeout('cronometro(2,'+id+');',1000);
 	}
 }
 
@@ -109,13 +112,13 @@ function iniciar(id){
 	$.get('index.php?r=apresentacao%2Fexecutar_apresentacao&id='+id);
 	$('#parar').removeClass('hide');
 	$('#iniciar').addClass('hide');
-	cronometro(1);
+	cronometro(1, id);
 	
 }
 
 function parar(id){
 	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
-	window.location.replace('index.php?r=apresentacao');
+	window.location.replace('index.php?r=apresentacao%2Fview&id='+id);
 	
 }
 

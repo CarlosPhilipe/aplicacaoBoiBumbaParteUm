@@ -23,7 +23,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
     <br>
 
     <div class="container text-center">        
-        <button id="tempo" class="btn-cronometrista btn-primary">Total: 00:00:00</button>
+        <button id="tempo" class="btn-cronometrista btn-primary">00:00:00</button>
         <button id="parcial" class="btn-cronometrista btn-sucess hide">Parcial: 00:00:00</button>         
     </div>
 
@@ -33,6 +33,28 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
         <button id="iniciar" onclick="iniciar(<?=$id?>)" type="button" class="btn btn-lg btn-success">Iniciar</button>
         <button id="parar" onclick="parar(<?=$id?>)" type="button" class="btn hide btn-lg btn-success">Parar</button>
     </div>
+
+    <br><br>
+    <h3>Análise Temporal</h3>
+    <table class="table table-bordered table-striped table-responsive">
+         <thead>
+           <tr>
+             <th>Tempo dos Elementos Realizado</th>
+             <th>Tempo dos Elementos Restantes</th>
+             <th>Tempo dos Elementos Contabilizado</th>
+             <th>Tempo Restante</th>
+           </tr>
+         </thead>
+
+          <tbody>
+            <tr id="previsao">
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
 
     <br>
 
@@ -46,6 +68,8 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
         <input id="segundosParcial" type="hidden"  value="<?php echo $segundos ?>" class="form-control" placeholder="Segundos">
     </div>
 
+    <br><br>
+    <h3>Roteiro</h3>
     <table class="table table-bordered table-striped table-responsive">
           <?php foreach ($partes as $parte):?>
               <thead>
@@ -81,7 +105,7 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
     </table>
 
     <br><br>
-    <h3>Histórico Realizado</h3>
+    <h3>Realizado</h3>
 
     <table class="table table-bordered table-striped table-responsive">
     	<thead>
