@@ -133,7 +133,8 @@ class HistoricoController extends Controller
         $query = new \yii\db\Query();
         $query = $query->select('sum(tempo_consumido) as tempo')
         ->from('historico')
-        ->where("apresentacao = ".$apresentacao);
+        ->where("apresentacao = ".$apresentacao)
+        ->andWhere(['>', 'data_hora_termino_execucao', $model->data_hora_inicio_execucao]);
         $tempo = $query->one();
 
         $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - intval($tempo['tempo']);

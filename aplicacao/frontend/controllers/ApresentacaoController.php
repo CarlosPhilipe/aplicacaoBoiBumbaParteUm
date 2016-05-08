@@ -171,9 +171,8 @@ public function actionExecutar_elemento($id, $elemento)
         $parte = new ParteSearch();
         $partes = $parte->getAllPartesApresentacao($id);
 
-        if($model->status_execucao == 1){
-            Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_termino_execucao' => date("Y-m-d H:i:s"), 'status_execucao' => 0], 'idapresentacao = '.$id)->execute();
-        }
+        Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_inicio_execucao' => null, 'data_hora_termino_execucao' => null, 'status_execucao' => 0], 'idapresentacao = '.$id)->execute();      
+            
 
         $elementosApresentacao = new ApresentacaoSearch();
         $elementosApresentacao = $elementosApresentacao->getAllElementosApresentacao($id);

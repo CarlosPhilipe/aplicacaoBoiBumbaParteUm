@@ -10,6 +10,7 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Elemento da parte: '.$parte->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Partes', 'url' => ['parte/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">

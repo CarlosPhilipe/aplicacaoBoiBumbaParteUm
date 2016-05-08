@@ -162,17 +162,42 @@ class ApresentacaoSearch extends Apresentacao
                 $tempoCadastradoNaoExecutado += intval($elemento['tempo']);
             }
 
+            $apresentacao = Apresentacao::findOne($idapresentacao);
             $elementosHistorico = Historico::find()
                 ->where(['apresentacao' => $idapresentacao, 'parte' => $elemento['parte_idparte'], 'elemento' => $elemento['idelemento']])
+                ->andWhere(['>', 'data_hora_termino_execucao', $apresentacao->data_hora_inicio_execucao])
                 ->all();
+
             foreach ($elementosHistorico as $elementoHistorico) {
                 $tempoContabilizado += intval($elementoHistorico['tempo_consumido']);
-            }
-            
+            }   
         }
+
+        $tempoCadastradoExecutado = $this->formataHHMMSS($tempoCadastradoExecutado);
+        $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
+        $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);
+        $tempoRestante = $this->formataHHMMSS($tempoRestante);
 
         $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoRestante."</td>";
 
         return $tabelalinhas;
+    }
+
+    function formataHHMMSS($tseg){
+
+        $horas = intval($tseg / 3600);
+        if ($horas<10) {
+            $horas = "0".$horas;
+        }
+        $minutos = intval(($tseg % 3600) / 60);
+        if ($minutos<10) {
+            $minutos = "0".$minutos;
+        }
+        $segundos = intval(($tseg % 3600) % 60);
+        if ($segundos<10) {
+            $segundos = "0".$segundos;
+        }
+
+        return $horas.":".$minutos.":".$segundos;
     }
 }
