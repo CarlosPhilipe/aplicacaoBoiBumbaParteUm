@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
 use yii\helpers\ArrayHelper;
+use kartik\widgets\DateTimePicker;
 
 
 /* @var $this yii\web\View */
@@ -25,8 +26,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
     </div>
 
 	<div id="row">
-        <div class="col-md-6"><?= $form->field($model, 'data_hora_inicio')?></div>
-        <div class="col-md-6"><?= $form->field($model, 'data_hora_fim')?></div>
+        <div class="col-md-6"><?=$form->field($model, 'data_hora_inicio')->widget(DateTimePicker::classname(), ['options' => ['placeholder' => 'Enter event time ...'], 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd hh:ii:ss',]]);?></div>
+
+        <div class="col-md-6"><?=$form->field($model, 'data_hora_fim')->widget(DateTimePicker::classname(), ['options' => ['placeholder' => 'Enter event time ...'], 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd hh:ii:ss',]]);?></div>
     </div>
     <div id="row">
         <div class="col-md-12">

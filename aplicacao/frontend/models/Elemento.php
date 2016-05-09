@@ -45,7 +45,7 @@ class Elemento extends \yii\db\ActiveRecord
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
             [['nome','tempoString','tipo_idtipo', 'descricao'], 'required'],
             [['nome', 'posicao'], 'string', 'max' => 45],
-            [['ocorreu'], 'string', 'max' => 1]
+            [['status'], 'string', 'max' => 1]
         ];
     }
 
@@ -59,7 +59,7 @@ class Elemento extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'tempo' => 'Tempo',
             'descricao' => 'Descricao',
-            'ocorreu' => 'Ocorreu',
+            'status' => 'Status',
             'posicao' => 'Posicao',
             'data_hora_inicio' => 'Data Hora Inicio',
             'data_hora_fim' => 'Data Hora Fim',
@@ -139,7 +139,7 @@ class Elemento extends \yii\db\ActiveRecord
 
     public function tempoFormatado($tempo)
     {
-        $tempoSegundo = $tempo % 60;
+        $tempoSegundo = intval($tempo) % 60;
         $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
         $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);

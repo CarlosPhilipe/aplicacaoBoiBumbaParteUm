@@ -75,7 +75,7 @@ class ParteController extends Controller
     public function actionIndex()
     {
         $session = Yii::$app->session;
-        $idapresentacao  = isset($_SESSION['dados.apresentacao']) ? $_SESSION['dados.apresentacao'] : null;
+        $idapresentacao  = $session->get('dados.apresentacao');
 
         if ($idapresentacao == null)
         {
@@ -87,9 +87,11 @@ class ParteController extends Controller
         $searchModel->apresentacao_idapresentacao = $idapresentacao;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        // $dataProvider = $searchModel->search((new ParteSearch)->getAllPartesApresentacao($idapresentacao));
         $apresentacao = Apresentacao::findOne($idapresentacao);
 
+        // echo "<br><br><br><br><br><br>".$session->get('dados.apresentacao');
+        // var_dump($dataProvider);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -191,16 +193,18 @@ class ParteController extends Controller
 
 
 
-    public function actionAddelemento($id)
+    public function actionSeguer($id)
     {
         $session = Yii::$app->session;
-       
-        $idapresentacao = $session->get('dados.apresentacao');
+        $idapresentacao  = $session->get('dados.apresentacao');
 
         if ($idapresentacao == null)
         {
             return $this->redirect(['apresentacao/index']);
         }
+
+       // echo "<>";
+        $session['dados.parte'] = $id;
         $model = $this->findModel($id);
 
          if (!empty($model)) 

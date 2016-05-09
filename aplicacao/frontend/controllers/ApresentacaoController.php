@@ -5,8 +5,10 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Apresentacao;
 use frontend\models\ParteSearch;
+use frontend\models\ElementoSearch;
 use frontend\models\TipoSearch;
 use frontend\models\ApresentacaoSearch;
+use frontend\models\Historico;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -80,6 +82,120 @@ class ApresentacaoController extends Controller
         ]);
     }
 
+    public function actionCronometrista($id)
+    {
+        $model = $this->findModel($id);
+
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
+
+        //echo "<br><br><br><br><br><br><br>";
+        //var_dump($model);
+        if (!empty($model)) 
+        {
+            return $this->redirect(['cronometrista/executar']);
+        } else {
+            return $this->actionIndex();
+        }
+    }
+
+    public function actionExecutar_apresentacao($id)
+    {
+
+        $model = $this->findModel($id);
+
+        if ($model->status_execucao == 0) {
+            Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_inicio_execucao' => date("Y-m-d H:i:s"), 'data_hora_termino_execucao' => null, 'status_execucao' => 1], 'idapresentacao = '.$id)->execute();
+        }
+
+        // Cálculo dos segundos do inicio da execução
+        $datetimedb = $model->data_hora_inicio_execucao;
+        $date_time_db = explode(" ", $datetimedb);
+        $timedb = explode(":", $date_time_db[1]);
+        $segundosdb = (intval($timedb[0])*3600)+(intval($timedb[1])*60)+intval($timedb[2]);
+
+        // Cáculo dos segundos do horário atual
+        $datetimenow = explode(" ", date("Y-m-d H:i:s"));
+        $timenow = explode(":", $datetimenow[1]);
+        $segundosnow = (intval($timenow[0])*3600)+(intval($timenow[1])*60)+intval($timenow[2]);
+        
+        // Geração dos parâmetros de tempo
+        $diferenca = $segundosnow-$segundosdb;
+        $horas = $diferenca / 3600;
+        $minutos = ($diferenca % 3600) / 60 ;
+        $segundos = ($diferenca % 3600) % 60;
+
+        // Geração do parametro das partes
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+
+
+        return $this->render('cronometro', [
+            'id' => $model->idapresentacao,
+            'nome' => $model->nome,
+            'status' => $model->status_execucao,
+            'datetimedb' => $datetimedb,
+            'segundos' => $segundos,
+            'minutos' => $minutos,
+            'horas' => $horas,
+            'partes' => $partes,
+        ]);
+
+    }
+
+public function actionExecutar_elemento($id, $elemento)
+    {
+       // echo $elemento."<br>";
+        $elementoDAO = new ElementoSearch();
+        $elementoDAO->executaElemento($elemento);
+
+        return $this->actionExecutar_apresentacao($id);
+
+    }
+
+
+
+    public function actionParar_apresentacao($id)
+    {
+        $model = $this->findModel($id);
+
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+
+        Yii::$app->db->createCommand()->update('apresentacao', ['data_hora_termino_execucao' => date("Y-m-d H:i:s"), 'status_execucao' => 0], 'idapresentacao = '.$id)->execute();      
+            
+
+        $elementosApresentacao = new ApresentacaoSearch();
+        $elementosApresentacao = $elementosApresentacao->getAllElementosApresentacao($id);
+        foreach ($elementosApresentacao as $elemento) {
+            Yii::$app->db->createCommand()->update('elemento', ['status' => 'a'], 'idelemento = '.$elemento['idelemento'])->execute();
+        }
+
+        return $this->render('cronometro', [
+            'id' => $model->idapresentacao,
+            'nome' => $model->nome,
+            'status' => $model->status_execucao,
+            'datetimedb' => null,
+            'segundos' => null,
+            'minutos' => null,
+            'horas' => null,
+            'partes' => $partes,
+        ]);
+
+    }
+
+
+
+
     /**
      * Displays a single Apresentacao model.
      * @param integer $id
@@ -87,8 +203,6 @@ class ApresentacaoController extends Controller
      */
     public function actionView($id)
     {
-        $parte = new ParteSearch();
-        $partes = $parte->getAllPartesApresentacao($id);
        // echo "<>";
         $session = Yii::$app->session;
 
@@ -101,10 +215,14 @@ class ApresentacaoController extends Controller
         }
         // aqui seto o id da apresentacao
         $session['dados.apresentacao'] = $id;
+
+        // Geração do parametro das partes
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
     
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'listPartes' => $partes,
+            'partes' => $partes,
         ]);
     }
 
@@ -147,10 +265,26 @@ class ApresentacaoController extends Controller
         }
     }
 
+    
 
-    public function actionAddparte($id)
+    public function actionSeguer($id)
     {
         $model = $this->findModel($id);
+
+        $parte = new ParteSearch();
+        $partes = $parte->getAllPartesApresentacao($id);
+       // echo "<>";
+        $session = Yii::$app->session;
+
+        // check if a session is already open
+        // echo "<br><br><br><br><br><br><br>".$session->isActive;
+        if (!$session->isActive)
+        {
+            // open a session
+            $session->open();
+        }
+        // aqui seto o id da apresentacao
+        $session['dados.apresentacao'] = $id;
 
         //echo "<br><br><br><br><br><br><br>";
         //var_dump($model);
@@ -173,6 +307,14 @@ class ApresentacaoController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+     public function actionPrevisao($id)
+    {
+        $searchModel = new ApresentacaoSearch();
+        $previsao = $searchModel->getPrevisaoExecutados($id);
+
+        return $previsao;
     }
 
     /**

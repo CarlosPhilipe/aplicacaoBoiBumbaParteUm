@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model frontend\models\Classes */
 
 $this->title = 'Atualizar Elemento: ' . ' ' . $model->idelemento;
-$this->params['breadcrumbs'][] = ['label' => 'Elemento', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idelemento, 'url' => ['view', 'id' => $model->idelemento]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = ['label' => 'Partes', 'url' => ['parte/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Elementos', 'url' => ['elemento/index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-update">
 

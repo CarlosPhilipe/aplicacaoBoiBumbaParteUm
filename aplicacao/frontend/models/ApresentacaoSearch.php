@@ -96,4 +96,112 @@ class ApresentacaoSearch extends Apresentacao
         return $listTipos;
 
     }
+
+    public function getTimeApresentacao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('sum(elemento.tempo) as tempo')
+        ->from('parte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->join('INNER JOIN', 'elemento','parte.idparte = elemento.parte_idparte')
+        ->where("idapresentacao = ".$idapresentacao)
+        ->groupBy(['idapresentacao']);
+
+        $partes = $query->one();
+
+         // echo "<br><br><br><br><br><br>";
+         //  var_dump($partes['tempo']); 
+        return $partes['tempo'];
+    }
+
+    public function getInicioExecucao($idapresentacao)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('data_hora_inicio_execucao')
+        ->from('apresentacao')
+        ->where("idapresentacao = ".$idapresentacao);
+
+        $inicioExecucao = $query->one();
+
+        return $inicioExecucao;
+    }
+
+    public function getAllElementosApresentacao($idapresentacao)
+    {
+        $query = new \yii\db\Query();
+
+        $query = $query->select('elemento.*')
+        ->from('elemento')
+        ->join('INNER JOIN', 'parte','parte.idparte = elemento.parte_idparte')
+        ->join('INNER JOIN', 'apresentacao','parte.apresentacao_idapresentacao = apresentacao.idapresentacao')
+        ->where("idapresentacao = ".$idapresentacao);
+        $elementos = $query->all();
+
+         // echo "<br><br><br><br><br><br>";
+         //  var_dump($partes['tempo']); 
+        return $elementos;
+    }
+
+    public function getPrevisaoExecutados($idapresentacao)
+    {
+        $tempoCadastradoExecutado = 0;
+        $tempoCadastradoNaoExecutado = 0;
+        $tempoContabilizado = 0;
+        $tempoRestante = 0;
+        
+
+        $elementosCadastrados = $this->getAllElementosApresentacao($idapresentacao);
+
+        foreach ($elementosCadastrados as $elemento) {
+            if ($elemento['status']=='c') {
+                $tempoCadastradoExecutado += intval($elemento['tempo']);
+            }
+            if ($elemento['status']=='a') {
+                $tempoCadastradoNaoExecutado += intval($elemento['tempo']);
+            }
+
+            $apresentacao = Apresentacao::findOne($idapresentacao);
+            $elementosHistorico = Historico::find()
+                ->where(['apresentacao' => $idapresentacao, 'parte' => $elemento['parte_idparte'], 'elemento' => $elemento['idelemento']])
+                ->andWhere(['>', 'data_hora_termino_execucao', $apresentacao->data_hora_inicio_execucao])
+                ->all();
+
+            foreach ($elementosHistorico as $elementoHistorico) {
+                $tempoContabilizado += intval($elementoHistorico['tempo_consumido']);
+            }   
+        }
+
+        $duracao = strtotime($apresentacao->data_hora_fim) - strtotime($apresentacao->data_hora_inicio);
+        $decorrido = strtotime(date("Y-m-d H:i:s")) - strtotime($apresentacao->data_hora_inicio_execucao);
+        $tempoRestante = $duracao - $decorrido;
+
+        $tempoCadastradoExecutado = $this->formataHHMMSS($tempoCadastradoExecutado);
+        $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
+        $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);
+        $tempoRestante = $this->formataHHMMSS($tempoRestante);
+
+        $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoRestante."</td>";
+
+        return $tabelalinhas;
+    }
+
+    function formataHHMMSS($tseg){
+
+        $horas = intval($tseg / 3600);
+        if ($horas<10) {
+            $horas = "0".$horas;
+        }
+        $minutos = intval(($tseg % 3600) / 60);
+        if ($minutos<10) {
+            $minutos = "0".$minutos;
+        }
+        $segundos = intval(($tseg % 3600) % 60);
+        if ($segundos<10) {
+            $segundos = "0".$segundos;
+        }
+
+        return $horas.":".$minutos.":".$segundos;
+    }
 }

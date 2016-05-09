@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\grid\PersonalActionColumn;
 use frontend\models\ApresentacaoSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\ApresentacaoSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Apresentacao';
+$this->title = 'Apresentações';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">
@@ -27,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'nome',
             'data_hora_inicio',
-            'data_hora_fim',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'tempoPlanejado',
+            'tempo',
+            ['class' => 'yii\grid\PersonalActionColumn'],
         ],
     ]); ?>
 

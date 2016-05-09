@@ -22,7 +22,7 @@ class ElementoSearch extends Elemento
             [['descricao'], 'string'],
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
             [['nome', 'posicao'], 'string', 'max' => 45],
-            [['ocorreu'], 'string', 'max' => 1]
+            [['status'], 'string', 'max' => 1]
         ];
     }
 
@@ -116,4 +116,59 @@ class ElementoSearch extends Elemento
          //  var_dump($elementos); 
         return $elementos;
     }
+
+    public function getElementosById($id)
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('nome', 'tempo')
+        ->from('elemento')
+        ->where("idelemento = ".$id);
+
+        $elemento = $query->one();
+
+        return $elemento;
+    }    
+
+
+    public function executaElemento($id)
+    {
+        
+
+        // RECUPERANDO IDS
+        $query = new \yii\db\Query();
+         $query = $query->select('apresentacao.data_hora_inicio_execucao, apresentacao.idapresentacao, parte.idparte')
+        ->from('elemento')
+        ->join('INNER JOIN', 'parte','parte.idparte = elemento.parte_idparte')
+        ->join('INNER JOIN', 'apresentacao','apresentacao.idapresentacao = parte.apresentacao_idapresentacao')
+        ->where("idelemento = ".$id);
+
+        $dados = $query->one();
+
+        $inicio =  $dados['data_hora_inicio_execucao'];
+        
+        // CALCULO DO TEMPO DECORRIDO
+        $query2 = new \yii\db\Query();
+        $query2 = $query2->select('sum(tempo_consumido) as tempo')
+        ->from('historico')
+        ->where("apresentacao = ".$dados['idapresentacao']);
+
+        $tempo = $query2->one();
+        // echo "<br><br><br><br>";
+        // var_dump($tempo);
+        
+        $agora = date("Y-m-d H:i:s");
+        
+        $tempoElemento = strtotime($agora) - strtotime($inicio) - strtotime($tempo['tempo']);
+
+        //
+        $query = $query->createCommand()->insert('historico', [
+        'apresentacao' => $dados['idapresentacao'],
+        'parte' => $dados['idparte'],
+        'elemento' => $id,
+        'tempo_consumido' => $tempoElemento ,
+        ]);
+
+        $query->execute();
+    }    
 }
