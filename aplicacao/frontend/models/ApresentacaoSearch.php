@@ -150,6 +150,7 @@ class ApresentacaoSearch extends Apresentacao
         $tempoCadastradoNaoExecutado = 0;
         $tempoContabilizado = 0;
         $tempoRestante = 0;
+        $previsao = 0;
         
 
         $elementosCadastrados = $this->getAllElementosApresentacao($idapresentacao);
@@ -177,12 +178,15 @@ class ApresentacaoSearch extends Apresentacao
         $decorrido = strtotime(date("Y-m-d H:i:s")) - strtotime($apresentacao->data_hora_inicio_execucao);
         $tempoRestante = $duracao - $decorrido;
 
+        $previsao = $tempoRestante-$tempoCadastradoNaoExecutado;
+
         $tempoCadastradoExecutado = $this->formataHHMMSS($tempoCadastradoExecutado);
         $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
         $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);
         $tempoRestante = $this->formataHHMMSS($tempoRestante);
+        $previsao = $this->formataPlusHHMMSS($previsao);
 
-        $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoRestante."</td>";
+        $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoRestante."</td><td>".$previsao."</td>";
 
         return $tabelalinhas;
     }
@@ -203,5 +207,33 @@ class ApresentacaoSearch extends Apresentacao
         }
 
         return $horas.":".$minutos.":".$segundos;
+    }
+
+    function formataPlusHHMMSS($tseg){
+        $time = '';
+
+        if ($tseg<0) {
+            $tseg = $tseg*(-1);
+            $time = '-';
+        }
+
+        if ($tseg>0) {
+            $time = '+';
+        }
+
+        $horas = intval($tseg / 3600);
+        if ($horas<10) {
+            $horas = "0".$horas;
+        }
+        $minutos = intval(($tseg % 3600) / 60);
+        if ($minutos<10) {
+            $minutos = "0".$minutos;
+        }
+        $segundos = intval(($tseg % 3600) % 60);
+        if ($segundos<10) {
+            $segundos = "0".$segundos;
+        }
+
+        return $time.$horas.":".$minutos.":".$segundos;
     }
 }

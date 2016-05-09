@@ -40,14 +40,16 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
          <thead>
            <tr>
              <th>Tempo dos Elementos Realizados</th>
-             <th>Tempo dos Elementos Restantes</th>
              <th>Tempo dos Elementos Contabilizados</th>
+             <th>Tempo dos Elementos Restantes</th>
              <th>Tempo Restante</th>
+             <th>Previsão</th>
            </tr>
          </thead>
 
           <tbody>
-            <tr id="previsao">
+            <tr id="previsao" class='text-center'>
+              <td>0</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
