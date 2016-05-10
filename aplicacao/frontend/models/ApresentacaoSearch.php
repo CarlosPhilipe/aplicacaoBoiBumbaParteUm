@@ -186,12 +186,32 @@ class ApresentacaoSearch extends Apresentacao
         $tempoRestante = $this->formataHHMMSS($tempoRestante);
         $previsao = $this->formataPlusHHMMSS($previsao);
 
-        $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoRestante."</td><td>".$previsao."</td>";
+        // $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoRestante."</td><td><b>".$previsao."</b></td>";
+    
+
+        $tabelalinhas = '<div class="row vdivide">
+                                <div class="col-sm-4 text-center">
+                                    <h2>Tempo Restante</h2>
+                                    <button class="btn-cronometrista btn-primary">'.$tempoCadastradoNaoExecutado.'</button>
+                                </div>'.
+                                '<div class="col-sm-4 text-center">
+                                    <h2>Regresivo</h2>
+                                    <button class="btn-cronometrista btn-primary">'.$tempoRestante.'</button>
+                                </div>'.
+                                '<div class="col-sm-4 text-center">
+                                    <h2>Previsão</h2>
+                                    <button class="btn-cronometrista btn-primary">'.$previsao.'</button>
+                                </div>
+                        </div>';
 
         return $tabelalinhas;
     }
 
     function formataHHMMSS($tseg){
+
+        if ($tseg<0) {
+            $tseg = $tseg*(-1);
+        }
 
         $horas = intval($tseg / 3600);
         if ($horas<10) {
@@ -214,11 +234,11 @@ class ApresentacaoSearch extends Apresentacao
 
         if ($tseg<0) {
             $tseg = $tseg*(-1);
-            $time = '-';
+            $time = '+';
         }
 
-        if ($tseg>0) {
-            $time = '+';
+        elseif ($tseg>0) {
+            $time = '-';
         }
 
         $horas = intval($tseg / 3600);

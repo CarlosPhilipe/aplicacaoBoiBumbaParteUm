@@ -100,24 +100,30 @@ function cronometro(aux,id){
 
 
 		tempo.innerText=time;
-		parcial.innerText=timeParcial;
+		// parcial.innerText=timeParcial;
 		$.get('index.php?r=apresentacao%2Fprevisao&id='+id, function(data){
 				$("#previsao").html(data);
 		});
-		setTimeout('cronometro(2,'+id+');',1000);
+		timer = setTimeout('cronometro(2,'+id+');',1000);
 	}
 }
 
 function iniciar(id){
 	$.get('index.php?r=apresentacao%2Fexecutar_apresentacao&id='+id);
 	$('#parar').removeClass('hide');
+	$('#sair').removeClass('hide');
 	$('#iniciar').addClass('hide');
 	cronometro(1, id);
 	
 }
 
 function parar(id){
-	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);
+	$.get('index.php?r=apresentacao%2Fparar_apresentacao&id='+id);	
+	$('#parar').addClass('hide');
+	clearTimeout(timer);
+}
+
+function sair(id){
 	window.location.replace('index.php?r=apresentacao%2Fview&id='+id);
 	
 }
