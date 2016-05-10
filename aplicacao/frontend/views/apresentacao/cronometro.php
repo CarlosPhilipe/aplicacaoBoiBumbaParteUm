@@ -20,43 +20,41 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <br>
-
-    <div class="container text-center">        
-        <button id="tempo" class="btn-cronometrista btn-primary">00:00:00</button>
-        <button id="parcial" class="btn-cronometrista btn-sucess hide">Parcial: 00:00:00</button>         
-    </div>
-
-    <br>
-
-    <div class="container text-center">        
+     <div class="container text-left">        
         <button id="iniciar" onclick="iniciar(<?=$id?>)" type="button" class="btn btn-lg btn-success">Iniciar</button>
-        <button id="parar" onclick="parar(<?=$id?>)" type="button" class="btn hide btn-lg btn-success">Parar</button>
+        <button id="parar" onclick="parar(<?=$id?>)" type="button" class="btn hide btn-lg btn-primary">Parar</button>
+        <button id="sair" onclick="sair(<?=$id?>)" type="button" class="btn hide btn-lg btn-success">sair</button>
     </div>
 
-    <br><br>
-    <h3>Análise Temporal</h3>
-    <table class="table table-bordered table-striped table-responsive">
-         <thead>
-           <tr>
-             <th>Tempo dos Elementos Realizados</th>
-             <th>Tempo dos Elementos Restantes</th>
-             <th>Tempo dos Elementos Contabilizados</th>
-             <th>Tempo Restante</th>
-           </tr>
-         </thead>
+    <div class="row vdivide">
+        <div class="col-sm-12 text-center">
+            <h2>Cronômetro</h2>
+            <button id="tempo" class="btn-cronometrista btn-primary">00:00:00</button>
+        </div>
+        <!-- <div class="col-sm-4 text-center">
+            <button id="parcial" class="btn-cronometrista btn-sucess">00:00:00</button>
+        </div> -->
+    </div>
 
-          <tbody>
-            <tr id="previsao">
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-          </tbody>
-        </table>
+    <div id="previsao" class='text-center'>
+        <div class="row vdivide">
+            <div class="col-sm-4 text-center">
+                  <h2>Tempo Restante</h2>
+                  <button class="btn-cronometrista btn-primary">00:00:00</button>
+            </div>
+            
+            <div class="col-sm-4 text-center">
+                  <h2>Regresivo</h2>
+                  <button class="btn-cronometrista btn-primary">00:00:00</button>
+            </div>
+            
+            <div class="col-sm-4 text-center">
+                  <h2>Previsão</h2>
+                  <button class="btn-cronometrista btn-primary">00:00:00</button>
+            </div>
+    </div>
 
-    <br>
+    </div>
 
     <div class="input-group">
         <input id="horas" type="hidden" value="<?php echo $horas ?>" class="form-control" placeholder="Horas">

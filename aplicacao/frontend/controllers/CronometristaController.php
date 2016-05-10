@@ -20,35 +20,35 @@ use yii\filters\AccessControl;
  */
 class CronometristaController extends Controller
 {
-    public function behaviors()
+   public function behaviors()
     {
         return [
         'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['executar','create','index', 'update', 'view', 'delete'],
+                'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['executar','create','index', 'update', 'view'],
+                        'actions' => ['create','index', 'update', 'view'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'estagiario_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'presidente' ;
                             }
                         }
                     ],
                     [
-                        'actions' => ['executar','create','index', 'update', 'view', 'delete'],
+                        'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'servidor_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'cronometrista' ;
                             }
                         }
                     ],
                     [
-                        'actions' => ['executar','create','index', 'update', 'view', 'delete'],
+                        'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
