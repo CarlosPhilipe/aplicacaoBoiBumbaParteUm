@@ -32,17 +32,17 @@ class ApresentacaoController extends Controller
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'estagiario_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'presidente' ;
                             }
                         }
                     ],
                     [
-                        'actions' => ['create','index', 'update', 'view', 'delete'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'servidor_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'cronometrista' ;
                             }
                         }
                     ],
