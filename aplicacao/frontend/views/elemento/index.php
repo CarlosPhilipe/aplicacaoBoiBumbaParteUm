@@ -16,6 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Voltar', ['parte/index'], ['class' => 'btn btn-primary']) ?>
+    </p>
+
     <?php   echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= DetailView::widget([
