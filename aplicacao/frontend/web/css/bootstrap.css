@@ -2049,6 +2049,29 @@ select[multiple].input-lg {
   border: 1px solid transparent;
   border-radius: 5px;
 }
+.btn-atraso {
+  color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 36px;
+  font-weight: normal;
+  line-height: 2.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: #2f4f4f; 
+}
+
+
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus {
@@ -2283,6 +2306,7 @@ fieldset[disabled] .btn-warning.active {
   color: #f0ad4e;
   background-color: #fff;
 }
+
 .btn-danger {
   color: #fff;
   background-color: #d9534f;
@@ -2294,7 +2318,7 @@ fieldset[disabled] .btn-warning.active {
 .btn-danger.active,
 .open .dropdown-toggle.btn-danger {
   color: #fff;
-  background-color: #d2322d;
+  background-color: #ffd7;
   border-color: #ac2925;
 }
 .btn-danger:active,
@@ -2324,6 +2348,54 @@ fieldset[disabled] .btn-danger.active {
   color: #d9534f;
   background-color: #fff;
 }
+
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+
+.btn-atraso:hover,
+.btn-atraso:focus,
+.btn-atraso:active,
+.btn-atraso.active,
+.open .dropdown-toggle.btn-atraso {
+  color: #fff;
+  background-color: #2f4f4f;
+  border-color: #ac2925;
+}
+.btn-atraso:active,
+.btn-atraso.active,
+.open .dropdown-toggle.btn-atraso {
+  background-image: none;
+}
+.btn-atraso.disabled,
+.btn-atraso[disabled],
+fieldset[disabled] .btn-atraso,
+.btn-atraso.disabled:hover,
+.btn-atraso[disabled]:hover,
+fieldset[disabled] .btn-atraso:hover,
+.btn-atraso.disabled:focus,
+.btn-atraso[disabled]:focus,
+fieldset[disabled] .btn-atraso:focus,
+.btn-atraso.disabled:active,
+.btn-atraso[disabled]:active,
+fieldset[disabled] .btn-atraso:active,
+.btn-atraso.disabled.active,
+.btn-atraso[disabled].active,
+fieldset[disabled] .btn-atraso.active {
+  background-color: #2f4f4f;
+  border-color: #d43f3a;
+}
+.btn-atraso .badge {
+  color: #2f4f4f;
+  background-color: #2f4f4f;
+}
+
+
+
+
 .btn-link {
   font-weight: normal;
   color: #428bca;

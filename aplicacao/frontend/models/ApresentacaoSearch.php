@@ -192,12 +192,12 @@ class ApresentacaoSearch extends Apresentacao
 
         if($previsao >= 0)
         {
-            $cor = 'btn-info';
+            $cor = 'btn-success';
             $folga = 'Folga';
         }
         else
         {
-          $cor = 'btn-primary';
+          $cor = 'btn-atraso';
           $folga = 'Atraso';
           $previsao *= -1;
         }
