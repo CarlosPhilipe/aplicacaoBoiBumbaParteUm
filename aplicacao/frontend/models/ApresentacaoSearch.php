@@ -180,27 +180,43 @@ class ApresentacaoSearch extends Apresentacao
 
         $previsao = $tempoRestante-$tempoCadastradoNaoExecutado;
 
+
+
         $tempoCadastradoExecutado = $this->formataHHMMSS($tempoCadastradoExecutado);
         $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
         $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);
         $tempoRestante = $this->formataHHMMSS($tempoRestante);
-        $previsao = $this->formataPlusHHMMSS($previsao);
+        //$previsao = $this->formataPlusHHMMSS($previsao);
 
         // $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoRestante."</td><td><b>".$previsao."</b></td>";
-    
+
+        if($previsao >= 0)
+        {
+            $cor = 'btn-info';
+            $folga = 'Folga';
+        }
+        else
+        {
+          $cor = 'btn-primary';
+          $folga = 'Atraso';
+          $previsao *= -1;
+        }
+
+        $previsao = $this->formataHHMMSS($previsao);
+
 
         $tabelalinhas = '<div class="row vdivide">
                                 <div class="col-sm-4 text-center">
-                                    <h2>Tempo Restante</h2>
-                                    <button class="btn-cronometrista btn-primary">'.$tempoCadastradoNaoExecutado.'</button>
+                                    <h2>Restante</h2>
+                                    <button class="btn-cronometrista2 btn-primary">'.$tempoCadastradoNaoExecutado.'</button>
                                 </div>'.
                                 '<div class="col-sm-4 text-center">
-                                    <h2>Regresivo</h2>
-                                    <button class="btn-cronometrista btn-primary">'.$tempoRestante.'</button>
+                                <h2>Regresivo<br></h2>
+                                    <button class="btn-cronometrista2 btn-primary">'.$tempoRestante.'</button>
                                 </div>'.
                                 '<div class="col-sm-4 text-center">
-                                    <h2>Previsão</h2>
-                                    <button class="btn-cronometrista btn-primary">'.$previsao.'</button>
+                                    <h2>'.$folga.'</h2>
+                                    <button class="btn-cronometrista2 '.$cor.'">'.$previsao.'</button>
                                 </div>
                         </div>';
 
@@ -234,11 +250,11 @@ class ApresentacaoSearch extends Apresentacao
 
         if ($tseg<0) {
             $tseg = $tseg*(-1);
-            $time = '+';
+            $time = 'Atraso<br>';
         }
 
         elseif ($tseg>0) {
-            $time = '-';
+            $time = 'Folga<br>';
         }
 
         $horas = intval($tseg / 3600);
