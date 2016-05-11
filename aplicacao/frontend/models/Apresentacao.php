@@ -51,9 +51,10 @@ class Apresentacao extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'nome' => 'Nome da Apresentacao',
-            'data_hora_inicio' => 'Data e Hora do Inicio',
-            'data_hora_fim' => 'Data e Hora do Fim',
+            'nome' => 'Nome da apresentação',
+            'aberta' => 'Status apresentação',
+            'data_hora_inicio' => 'Data e hora do inicio',
+            'data_hora_fim' => 'Data e hora do fim',
             'tempoPlanejado' => 'Duração estimada',
             'tempo' => 'Soma dos elementos',
         ];
