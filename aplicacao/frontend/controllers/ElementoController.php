@@ -27,7 +27,7 @@ class ElementoController extends Controller
                 'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['create','index', 'update', 'view'],
+                        'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
