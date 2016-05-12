@@ -6,6 +6,9 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\models\Apresentacao;
+use frontend\models\ApresentacaoSearch;
+use frontend\models\Historico;
+use frontend\models\HistoricoSearch;
 
 /*
 * * ApresentacaoSearch represents the model behind the search form about `frontend\models\Apresentacao`.
@@ -148,9 +151,24 @@ class ApresentacaoSearch extends Apresentacao
     {
         $tempoCadastradoExecutado = 0;
         $tempoCadastradoNaoExecutado = 0;
+        $tempo_consumido = 0;
         $tempoContabilizado = 0;
         $tempoRestante = 0;
         $previsao = 0;
+
+        $agora = date("Y-m-d H:i:s");
+
+        $model = Apresentacao::findOne($idapresentacao);
+        $data_hora_inicio_execucao = $model->data_hora_inicio_execucao;
+
+        $query = new \yii\db\Query();
+        $query = $query->select('sum(tempo_consumido) as tempo')
+        ->from('historico')
+        ->where("apresentacao = ".$idapresentacao)
+        ->andWhere(['>', 'data_hora_termino_execucao', $model->data_hora_inicio_execucao]);
+        $tempo = $query->one();
+
+        $tempo_consumido = strtotime($agora) - strtotime($data_hora_inicio_execucao) - intval($tempo['tempo']);
         
 
         $elementosCadastrados = $this->getAllElementosApresentacao($idapresentacao);
@@ -186,9 +204,7 @@ class ApresentacaoSearch extends Apresentacao
         $tempoCadastradoNaoExecutado = $this->formataHHMMSS($tempoCadastradoNaoExecutado);
         $tempoContabilizado = $this->formataHHMMSS($tempoContabilizado);
         $tempoRestante = $this->formataHHMMSS($tempoRestante);
-        //$previsao = $this->formataPlusHHMMSS($previsao);
-
-        // $tabelalinhas = "<td>".$tempoCadastradoExecutado."</td><td>".$tempoContabilizado."</td><td>".$tempoCadastradoNaoExecutado."</td><td>".$tempoRestante."</td><td><b>".$previsao."</b></td>";
+        $tempo_consumido = $this->formataHHMMSS($tempo_consumido);
 
         if($previsao >= 0)
         {
@@ -198,7 +214,7 @@ class ApresentacaoSearch extends Apresentacao
         else
         {
           $cor = 'btn-atraso';
-          $folga = 'Atraso';
+          $folga = '<b>Atraso!!!</b>';
           $previsao *= -1;
         }
 
@@ -206,15 +222,19 @@ class ApresentacaoSearch extends Apresentacao
 
 
         $tabelalinhas = '<div class="row vdivide">
-                                <div class="col-sm-4 text-center">
+                                <div class="col-sm-3 text-center">
+                                    <h2>Regresivo<br></h2>
+                                    <button class="btn-cronometrista2 btn-primary">'.$tempoRestante.'</button>
+                                </div>
+                                <div class="col-sm-3 text-center">
                                     <h2>Restante</h2>
                                     <button class="btn-cronometrista2 btn-primary">'.$tempoCadastradoNaoExecutado.'</button>
-                                </div>'.
-                                '<div class="col-sm-4 text-center">
-                                <h2>Regresivo<br></h2>
-                                    <button class="btn-cronometrista2 btn-primary">'.$tempoRestante.'</button>
-                                </div>'.
-                                '<div class="col-sm-4 text-center">
+                                </div>
+                                <div class="col-sm-3 text-center">
+                                    <h2>Consumido</h2>
+                                    <button class="btn-cronometrista2 btn-primary">'.$tempo_consumido.'</button>
+                                </div>
+                                <div class="col-sm-3 text-center">
                                     <h2>'.$folga.'</h2>
                                     <button class="btn-cronometrista2 '.$cor.'">'.$previsao.'</button>
                                 </div>

@@ -2051,6 +2051,7 @@ select[multiple].input-lg {
 }
 .btn-atraso {
   color: #fff;
+  background-color: #2f4f4f;
   display: inline-block;
   padding: 6px 12px;
   margin-bottom: 0;
@@ -2068,7 +2069,7 @@ select[multiple].input-lg {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 5px;
-  background-color: #2f4f4f; 
+  background: url("/boi/aplicacao/frontend/web/images/atraso.png") no-repeat center center;
 }
 
 
