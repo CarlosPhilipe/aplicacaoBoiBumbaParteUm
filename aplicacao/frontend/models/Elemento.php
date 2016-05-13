@@ -57,7 +57,7 @@ class Elemento extends \yii\db\ActiveRecord
         return [
             'idelemento' => 'Idelemento',
             'nome' => 'Nome',
-            'tempo' => 'Tempo',
+            'tempoString' => 'Tempo',
             'descricao' => 'Descricao',
             'status' => 'Status',
             'posicao' => 'Posicao',

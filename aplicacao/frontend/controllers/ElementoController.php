@@ -27,22 +27,22 @@ class ElementoController extends Controller
                 'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['create','index', 'update', 'view'],
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            if(!Yii::$app->user->isGuest)
-                            {
-                                return Yii::$app->user->identity->grupoacesso == 'estagiario_juridico' ;
-                            }
-                        }
-                    ],
-                    [
                         'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'servidor_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'presidente' ;
+                            }
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            if(!Yii::$app->user->isGuest)
+                            {
+                                return Yii::$app->user->identity->grupoacesso == 'cronometrista' ;
                             }
                         }
                     ],

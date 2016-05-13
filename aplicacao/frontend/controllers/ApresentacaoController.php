@@ -27,22 +27,22 @@ class ApresentacaoController extends Controller
                 'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['create','index', 'update', 'view'],
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            if(!Yii::$app->user->isGuest)
-                            {
-                                return Yii::$app->user->identity->grupoacesso == 'estagiario_juridico' ;
-                            }
-                        }
-                    ],
-                    [
                         'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'servidor_juridico' ;
+                                return Yii::$app->user->identity->grupoacesso == 'presidente' ;
+                            }
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            if(!Yii::$app->user->isGuest)
+                            {
+                                return Yii::$app->user->identity->grupoacesso == 'cronometrista' ;
                             }
                         }
                     ],
@@ -236,7 +236,7 @@ public function actionExecutar_elemento($id, $elemento)
         $model = new Apresentacao();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idapresentacao]);
+            return $this->redirect(['index', 'id' => $model->idapresentacao]);
         } else {
             return $this->render('create', [
                 'model' => $model,
