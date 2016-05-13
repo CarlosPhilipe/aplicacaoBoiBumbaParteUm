@@ -38,10 +38,18 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Apresentação', 'url' => ['/apresentacao/index']];
+        $grupoacesso = Yii::$app->user->identity->grupoacesso;
+
+        if(in_array($grupoacesso, ['admin'] , true) )
+        {
+            $menuItems[] = ['label' => 'Usuários', 'url' => ['/user/']];
+        }
+        else if(in_array($grupoacesso, ['cronometrista','presidente'] , true) )
+        {
+            $menuItems[] = ['label' => 'Apresentação', 'url' => ['/apresentacao/index']];
+        }
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
