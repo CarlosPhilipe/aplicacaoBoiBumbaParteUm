@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <?php foreach ($partes as $parte):?>
               <thead>
                   <tr>
-                      <th><?='Elementos da '.$parte['nome'] ?></th>
+                      <th><?= $parte['nome'] ?></th>
                       <th class='text-center'>Tempo</th>
                   </tr>
               </thead>
