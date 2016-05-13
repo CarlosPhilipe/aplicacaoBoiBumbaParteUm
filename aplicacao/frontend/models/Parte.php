@@ -82,13 +82,18 @@ class Parte extends \yii\db\ActiveRecord
     public function tempoFormatado($tempo)
     {
         $tempoSegundo = $tempo % 60;
-        $tempoMinuto = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
+        $restante = (($tempo - $tempoSegundo) / 60);//= $this->tempoMinuto*60 + $this->tempoSegundo;
         
+        $tempoMinuto = $restante % 60;
+
+        $tempoHora = ($restante - $tempoMinuto)/60;
+
+        $tempoHora = $this->zeroAEsquerda($tempoHora);
         $tempoSegundo = $this->zeroAEsquerda($tempoSegundo);
         $tempoMinuto = $this->zeroAEsquerda($tempoMinuto);
         
         $tempoString = $tempoMinuto.$tempoSegundo;
-        $tempoFormatado= $tempoMinuto.":".$tempoSegundo;
+        $tempoFormatado= $tempoHora.":".$tempoMinuto.":".$tempoSegundo;
           
 
         return ['tempoString' => $tempoString,'tempoFormatado' => $tempoFormatado];
