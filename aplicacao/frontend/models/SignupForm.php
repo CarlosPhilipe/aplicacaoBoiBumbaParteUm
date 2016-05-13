@@ -10,6 +10,7 @@ use Yii;
  */
 class SignupForm extends Model
 {
+    public $nome;
     public $username;
     public $email;
     public $password;
@@ -33,9 +34,21 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['nome', 'filter', 'filter' => 'trim'],
+            ['nome', 'required'],
+            ['nome', 'string', 'min' => 6, 'max' => 255],
         ];
     }
-
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Nome de usuário',
+            'email' => 'Email',
+            'password' => 'Senha',
+        ];
+    }
     /**
      * Signs user up.
      *

@@ -21,7 +21,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
 
     <div id="row">
     	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
-        <div class="col-md-6"><?= $form->field($model, 'aberta')->dropDownList([false =>'Fechada',true =>'Aberta'], ['prompt'=>'Selecione']) ?> 
+        <div class="col-md-6"><?= $form->field($model, 'aberta')->dropDownList($model->getStatusApresentcacao(), ['prompt'=>'Selecione']) ?> 
     </div>	
     </div>
 

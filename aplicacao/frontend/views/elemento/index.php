@@ -9,13 +9,18 @@ use yii\widgets\DetailView;
 /* @var $searchModel frontend\models\ElementoSeach*/
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Elemento da parte: '.$parte->nome;
+$this->title = $parte->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Partes', 'url' => ['parte/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Voltar', ['parte/index'], ['class' => 'btn btn-primary']) ?>
+    </p>
+
     <?php   echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= DetailView::widget([

@@ -15,6 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Voltar', ['apresentacao/index'], ['class' => 'btn btn-primary']) ?>
+    </p>
   
     <?= DetailView::widget([
         'model' => $apresentacao,

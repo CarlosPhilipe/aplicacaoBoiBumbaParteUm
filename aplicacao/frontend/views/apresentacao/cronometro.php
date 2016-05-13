@@ -38,19 +38,24 @@ $this->registerCssFile(Yii::$app->request->baseUrl.'/css/cronometro.css');
 
     <div id="previsao" class='text-center'>
         <div class="row vdivide">
-            <div class="col-sm-4 text-center">
-                  <h2>Tempo Restante</h2>
-                  <button class="btn-cronometrista btn-primary">00:00:00</button>
-            </div>
-            
-            <div class="col-sm-4 text-center">
+            <div class="col-sm-3 text-center">
                   <h2>Regresivo</h2>
-                  <button class="btn-cronometrista btn-primary">00:00:00</button>
+                  <button class="btn-cronometrista2 btn-primary">00:00:00</button>
+            </div>
+
+            <div class="col-sm-3 text-center">
+                  <h2>Tempo Restante</h2>
+                  <button class="btn-cronometrista2 btn-primary">00:00:00</button>
+            </div>
+
+            <div class="col-sm-3 text-center">
+                  <h2>Consumido</h2>
+                  <button class="btn-cronometrista2 btn-primary">00:00:00</button>
             </div>
             
-            <div class="col-sm-4 text-center">
+            <div class="col-sm-3 text-center">
                   <h2>Previsão</h2>
-                  <button class="btn-cronometrista btn-primary">00:00:00</button>
+                  <button class="btn-cronometrista2 btn-primary">00:00:00</button>
             </div>
     </div>
 

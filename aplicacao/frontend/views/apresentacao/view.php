@@ -17,15 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= 'Apresentacao: '.$model->nome; ?></h1>
 
     <p>
-        
-        <?= Html::a('Atualizar', ['update', 'id' => $model->idapresentacao], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Remover', ['delete', 'id' => $model->idapresentacao], [
-            'class' => 'btn btn-default',
-            'data' => [
-                'confirm' => 'Tem certeza de que deseja excluir este item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -50,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <?php foreach ($partes as $parte):?>
               <thead>
                   <tr>
-                      <th><?='Elementos da '.$parte['nome'] ?></th>
+                      <th><?= $parte['nome'] ?></th>
                       <th class='text-center'>Tempo</th>
                   </tr>
               </thead>

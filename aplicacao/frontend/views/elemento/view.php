@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= 'Elemento: '.$model->nome; ?></h1>
 
     <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Atualizar', ['update', 'id' => $model->idelemento], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->idelemento], [
             'class' => 'btn btn-default',

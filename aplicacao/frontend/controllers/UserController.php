@@ -3,26 +3,22 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Elemento;
-use frontend\models\Apresentacao;
-use frontend\models\Parte;
-use frontend\models\Tipo;
-use frontend\models\TipoSearch;
-use frontend\models\ElementoSearch;
+use frontend\models\User;
+use frontend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
- * ElementoController implements the CRUD actions for Elemento model.
+ * UserController implements the CRUD actions for User model.
  */
-class ElementoController extends Controller
+class UserController extends Controller
 {
     public function behaviors()
     {
         return [
-        'access' => [
+           'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
@@ -32,27 +28,7 @@ class ElementoController extends Controller
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
                             {
-                                return Yii::$app->user->identity->grupoacesso == 'presidente' ;
-                            }
-                        }
-                    ],
-                    [
-                        'actions' => ['index', 'view'],
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            if(!Yii::$app->user->isGuest)
-                            {
-                                return Yii::$app->user->identity->grupoacesso == 'cronometrista' ;
-                            }
-                        }
-                    ],
-                    [
-                        'actions' => ['create','index', 'update', 'view', 'delete'],
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            if(!Yii::$app->user->isGuest)
-                            {
-                                return Yii::$app->user->identity->grupoacesso == 'gestor' ;
+                                return Yii::$app->user->identity->grupoacesso == 'admin' ;
                             }
                         }
                     ],
@@ -68,36 +44,22 @@ class ElementoController extends Controller
     }
 
     /**
-     * Lists all Elemento models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $session = Yii::$app->session;
-        $idapresentacao  = $session->get('dados.apresentacao');
-        $idparte = $session->get('dados.parte');
-
-        if ($idapresentacao == null || $idparte == null)
-        {
-            return $this->redirect(['apresentacao/index']);
-        }
-
-        $parte  = Parte::findOne($idparte);
-        $apresentacao = Apresentacao::findOne($idapresentacao);
-        $searchModel = new ElementoSearch();
-        $searchModel->parte_idparte = $idparte;
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'parte' => $parte,
-            'apresentacao' => $apresentacao,
         ]);
     }
 
     /**
-     * Displays a single Elemento model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      */
@@ -109,38 +71,25 @@ class ElementoController extends Controller
     }
 
     /**
-     * Creates a new Elemento model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Elemento();
-        $tipo = TipoSearch::getIdAndName();
-
-        $session = Yii::$app->session;
-        $idparte = $session->get('dados.parte');
-
-        if ($idparte == null)
-        {
-            return $this->redirect(['apresentacao/index']);
-        }
-
-        $model->parte_idparte = $idparte;
+        $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->actionIndex();
-            //return $this->redirect(['view', 'id' => $model->idelemento]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'tipo' => $tipo,
             ]);
         }
     }
 
     /**
-     * Updates an existing Elemento model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -148,20 +97,18 @@ class ElementoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $tipo = TipoSearch::getIdAndName();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->actionIndex();
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'tipo' => $tipo,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Elemento model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -174,15 +121,15 @@ class ElementoController extends Controller
     }
 
     /**
-     * Finds the Elemento model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Elemento the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Elemento::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

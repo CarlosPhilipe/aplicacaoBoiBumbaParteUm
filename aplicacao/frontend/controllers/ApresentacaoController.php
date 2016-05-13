@@ -27,7 +27,7 @@ class ApresentacaoController extends Controller
                 'only' => ['create','index', 'update', 'view', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['create','index', 'update', 'view'],
+                        'actions' => ['create','index', 'update', 'view', 'delete'],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             if(!Yii::$app->user->isGuest)
@@ -236,7 +236,7 @@ public function actionExecutar_elemento($id, $elemento)
         $model = new Apresentacao();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idapresentacao]);
+            return $this->redirect(['index', 'id' => $model->idapresentacao]);
         } else {
             return $this->render('create', [
                 'model' => $model,
