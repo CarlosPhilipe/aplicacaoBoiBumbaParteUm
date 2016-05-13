@@ -67,6 +67,11 @@ class Apresentacao extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Roteiro::className(), ['apresentacao_idapresentacao' => 'idapresentacao']);
     }
+
+    public function getStatusApresentcacao()
+    {
+        return [false =>'Bloqueada para execução',true =>'Permitida para execução'];
+    }
     
     public function afterFind()
     {
