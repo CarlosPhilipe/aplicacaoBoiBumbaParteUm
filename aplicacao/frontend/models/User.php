@@ -73,7 +73,11 @@ class User extends \yii\db\ActiveRecord
 
    public function beforeSave($insert)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($this->senha);
+        if($this->grupoacesso !='bloqueado')
+        {
+            $this->password_hash = Yii::$app->security->generatePasswordHash($this->senha);
+        }
+        
         $this->auth_key = Yii::$app->security->generateRandomString();
 
         if (parent::beforeSave($insert)) 
