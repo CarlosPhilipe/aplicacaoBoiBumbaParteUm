@@ -49,6 +49,7 @@ AppAsset::register($this);
         else if(in_array($grupoacesso, ['cronometrista','presidente'] , true) )
         {
             $menuItems[] = ['label' => 'Apresentação', 'url' => ['/apresentacao/index']];
+            $menuItems[] = ['label' => 'Item', 'url' => ['/item/']];
         }
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
