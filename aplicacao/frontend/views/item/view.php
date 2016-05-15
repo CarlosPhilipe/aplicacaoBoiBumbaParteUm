@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\imagine\Image;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Item */
 
-$this->title = $model->iditem;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->iditem], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->iditem], [
-            'class' => 'btn btn-danger',
+        <?= Html::a('Atualizar', ['update', 'id' => $model->iditem], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Remover', ['delete', 'id' => $model->iditem], [
+            'class' => 'btn btn-default',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
@@ -28,10 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'iditem',
             'nome',
             'descricao:ntext',
-            'imagem',
+            [
+                'label' =>'Imagem',
+                'format' => 'html',
+                'value' => Html::img($model['imagem'],['width' => '250px']),
+            ]
+            ,
+            [
+                'label' => 'Imagem URL',
+                'value' => $model['imagem'],
+            ],
         ],
     ]) ?>
 

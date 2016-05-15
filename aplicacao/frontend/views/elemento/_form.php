@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
 use yii\helpers\ArrayHelper;
+use frontend\models\ItemSearch;
 
 
 /* @var $this yii\web\View */
@@ -20,7 +21,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/elemento.js',['depends' =
 
     <div id="row">
     	<div class="col-md-6"><?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?></div>
-    	<div class="col-md-6"><?= $form->field($model, 'tipo_idtipo')->dropDownList(ArrayHelper::map($tipo, 'idtipo', 'nome'), ['prompt'=>'Selecione']) ?></div>
+    	<div class="col-md-3"><?= $form->field($model, 'tipo_idtipo')->dropDownList(ArrayHelper::map($tipo, 'idtipo', 'nome'), ['prompt'=>'Selecione']) ?></div>
+        <div class="col-md-3"><?= $form->field($model, 'item_iditem')->dropDownList(ArrayHelper::map(ItemSearch::getIdAndName(), 'iditem', 'nome'), ['prompt'=>'Selecione']) ?></div>
     </div>
 	<div id="row">
         <div class="col-md-6"><?= $form->field($model, 'tempoString')->widget(MaskedInput::className(), ['mask' => '99:99'])?></div>

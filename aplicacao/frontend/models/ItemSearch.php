@@ -65,4 +65,32 @@ class ItemSearch extends Item
 
         return $dataProvider;
     }
+
+
+    public static function getIdAndName()
+    {
+         $query = new \yii\db\Query();
+
+        $query = $query->select('iditem,  nome')
+        ->from('item');
+        
+        $query = $query->orderBy([
+            'nome' => SORT_ASC,
+        ]);
+        $itens = $query->all();
+
+        
+        $listItens= [];
+
+
+        foreach ($itens as $item) 
+        {
+            $listItens[] = ['iditem' => $item['iditem'], 'nome' => $item['nome']]; 
+
+        }
+             
+            //$triagemPre = ['triagens'=> $triagemPre] ;
+        return $listItens;
+
+    }
 }
