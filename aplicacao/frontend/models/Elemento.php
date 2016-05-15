@@ -40,13 +40,22 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tempo', 'parte_idparte', 'tipo_idtipo'], 'integer'],
+            [['tempo', 'parte_idparte', 'tipo_idtipo', 'item_iditem'], 'integer'],
             [['descricao'], 'string'],
             [['data_hora_inicio', 'data_hora_fim'], 'safe'],
             [['nome','tempoString','tipo_idtipo', 'descricao'], 'required'],
             [['nome', 'posicao'], 'string', 'max' => 45],
-            [['status'], 'string', 'max' => 1]
+            [['status'], 'string', 'max' => 1],
+            ['tempoString', 'validaTempo'],
+
         ];
+    }
+
+
+
+    public function getItens()
+    {
+        return $this->hasMany(Item::className(), ['item_iditem' => 'iditem']);
     }
 
     /**
@@ -65,6 +74,7 @@ class Elemento extends \yii\db\ActiveRecord
             'data_hora_fim' => 'Data Hora Fim',
             'parte_idparte' => 'Parte',
             'tipo_idtipo' => 'Tipo',
+            'item_iditem' => 'Item',
         ];
     }
 
@@ -76,6 +86,11 @@ class Elemento extends \yii\db\ActiveRecord
         return $this->hasOne(Tipo::className(), ['idtipo' => 'tipo_idtipo']);
     }
 
+    public function getItemIdItem()
+    {
+        return $this->hasOne(Item::className(), ['iditem' => 'item_iditem']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -84,39 +99,21 @@ class Elemento extends \yii\db\ActiveRecord
         return $this->hasOne(Parte::className(), ['idparte' => 'parte_idparte']);
     }
 
-    
 
-    public function beforeSave($insert)
+    public function validaTempo()
     {
         $tempoString = explode(":", $this->tempoString);
 
         if($tempoString[1]> 59)
         {
-            return false;
+            $this->addError('tempoString','Segundo devem ser menor que 60');
+        
         }
         else
         {
             $this->tempo = $tempoString[0]*60 + $tempoString[1];
         }
 
-        // echo "<br>";
-        // echo "<br>";
-        // echo "<br>";
-        // echo "<br>";
-        // var_dump ($tempoString);
-
-        //return false;
-       // $this->tempo = $this->tempoMinuto*60 + $this->tempoSegundo;
-
-        if (parent::beforeSave($insert)) 
-        {
-        // ...custom code here...
-            return true;
-        } 
-        else
-        {
-            return false;
-        }
     }
 
     public function afterFind()
